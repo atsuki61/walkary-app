@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walkary</title>
+    <link rel="stylesheet" href="{% static 'walkary/css/index.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'walkary/js/scripts.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <main>
+            <div class="form-container">
+            <form id="dataForm" method="post" action="">
+                <label for="steps">距離(m):</label>
+                <input type="number" id="steps" name="steps" step="0.01" required>
+                <label for="weight">体重(kg):</label>
+                <input type="number" id="weight" name="weight" step="0.01" required>
+                <button type="submit">送信</button>
+            </form>
+            </div>
+            <div class="chart-container">
+                <div class="chart-wrapper">
+                    <canvas id="stepsChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="weightChart"></canvas>
+                </div>
+            </div>
+        </main>
+        <nav>
+            <ul>
+                <li><a href="{% url 'walkary:home' %}">ホーム</a></li>
+                <li><a href="{% url 'walkary:map' %}">マップ</a></li>
+                <li><a href="{% url 'walkary:graph' %}"class="active">グラフ</a></li>
+                <li><a href="{% url 'walkary:mypage' %}">マイページ</a></li>
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>

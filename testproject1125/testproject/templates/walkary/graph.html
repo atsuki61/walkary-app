@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歩数グラフ</title>
+    <link rel="stylesheet" href="{% static 'walkary/css/index.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="chart-container">
+            <canvas id="stepsChart"></canvas>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="{% url 'walkary:home' %}">ホーム</a></li>
+                <li><a href="{% url 'walkary:map' %}">マップ</a></li>
+                <li><a href="{% url 'walkary:graph' %}" class="active">グラフ</a></li>
+                <li><a href="{% url 'walkary:mypage' %}">マイページ</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Djangoから渡されたデータをパース
+            const stepsData = JSON.parse('{{ steps_data|safe }}');
+
+            // グラフデータを作成
+            const labels = stepsData.map(item => item.date); // 日付を取得
+            const steps = stepsData.map(item => item.steps); // 歩数を取得
+
+            // Chart.jsを使用してグラフを描画
+            const ctx = document.getElementById('stepsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line', // 折れ線グラフ
+                data: {
+                    labels: labels, // 横軸 (日付)
+                    datasets: [{
+                        label: '歩数',
+                        data: steps, // 縦軸 (歩数)
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '歩数'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '日付'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
