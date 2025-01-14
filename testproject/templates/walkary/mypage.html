@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walkary</title>
+    <link rel="stylesheet" href="{% static 'walkary/css/mypage.css' %}">
+</head>
+<body>
+    <div class="container">
+        <main>
+            <section>
+                <h2>ユーザー情報</h2>
+            </section>
+            <div id="info">
+                <p>名前：{{ user_profile.name }}</p>
+                <p>年齢：{{ user_profile.age }}</p>
+                <p>身長：{{ user_profile.height }} cm</p>
+                <p>体重：{{ user_profile.weight }} kg</p>
+                <p>性別：{{ user_profile.gender }}</p>
+                <p>目標：{{ user_profile.goal }}歩</p>
+            </div>
+
+            <button id="edit-button" onclick="toggleForm()">変更</button>
+
+            <div id="form" class="hidden">
+                <form method="post" action="{% url 'walkary:mypage' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">保存</button>
+                </form>
+            </div>
+        </main>
+        <nav>
+            <ul>
+                <li><a href="{% url 'walkary:home' %}">ホーム</a></li>
+                <li><a href="{% url 'walkary:map' %}">マップ</a></li>
+                <li><a href="{% url 'walkary:graph' %}">グラフ</a></li>
+                <li><a href="{% url 'walkary:mypage' %}" class="active">マイページ</a></li>
+            </ul>
+        </nav>
+        <form method="post" action="{% url 'walkary:logout' %}">
+            {% csrf_token %}
+            <button type="submit">ログアウト</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleForm() {
+            var form = document.getElementById("form");
+            form.classList.toggle("hidden");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walkary</title>
+    <link rel="stylesheet" href="{% static 'walkary/css/home.css' %}">
+</head>
+<body>
+    <div class="container">
+        <main>
+            <div class="circle">
+                <p>目標 <span id="target-steps">{{ goal }}</span>歩</p>
+                <p class="steps">現在 <span id="steps">2500</span>歩</p>
+                <p>残り： <span id="remaining">{{ goal|default_if_none:0|add:"-2500" }}</span>歩</p>
+            </div>
+            <div class="info-buttons">
+                <button class="info-button" id="goal-days">150 kcal(歩いた場合)</button>
+                <button class="info-button" id="calories-burned">250 kcal(走った場合)</button>
+            </div>
+            <button onclick="location.href='{% url 'walkary:map' %}'">ルートを作成する</button>
+        </main>
+        <nav>
+            <ul>
+                <li><a href="{% url 'walkary:home'%}" class="active">ホーム</a></li>
+                <li><a href="{% url 'walkary:map' %}">マップ</a></li>
+                <li><a href="{% url 'walkary:graph' %}">グラフ</a></li>
+                <li><a href="{% url 'walkary:mypage' %}">マイページ</a></li>
+            </ul>
+        </nav>
+    </div>
+    <script src="{% static 'walkary/js/scripts.js' %}"></script>
+</body>
+</html>

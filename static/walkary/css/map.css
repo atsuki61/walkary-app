@@ -1,0 +1,351 @@
+.container {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0 auto; /* コンテナを水平方向の中央に配置します。 */
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto; /* コンテナの高さを自動に設定します。これにより、内容が収まりきらなくても全て表示されます。 */
+    min-height: 100vh; /* しかし、コンテナの最小の高さはビューポートの高さの100%に設定します。これにより、内容が少ない場合でもコンテナは全画面を占めます。 */
+    background-color: #f4f4f9;
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: auto; /* コンテナの内容が収まりきらない場合、スクロールバーが表示されます。 */
+    flex-direction: column;
+    justify-content: space-between;
+
+    /* 以下のプロパティを追加して、.container内の要素を大きくします。 */
+    font-size: 1.5em; /* フォントサイズを大きくします。 */
+    padding: 0px; /* 内側の余白（パディング）を増やします。これにより、要素がコンテナの端から離れ、見た目が大きくなります。 */
+}
+
+
+
+header {
+    text-align: center;
+    padding: 20px;
+    background: #0804f3;
+    color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+main {
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.circle {
+    width: 180px;
+    height: 180px;
+    border: 8px solid #1260f0;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #F3E5F5;
+}
+
+.circle p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.steps {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1260f0;
+}
+
+.info-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.info-button {
+    background: #1260f0;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.info-button:hover {
+    background: #20d4ae;
+}
+
+.create-route-button {
+    background: #03DAC5;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.create-route-button:hover {
+    background: #029a8b;
+}
+
+nav {
+    border-top: 1px solid #ddd;
+    background: #fafafa;
+    width: 100%; /* 横幅をコンテナ全体に設定 */
+
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+
+}
+
+nav ul li {
+    flex: 1;
+
+}
+
+nav ul li a {
+    display: block;
+    padding: 15px 10px; /* 左右に余白を追加 */
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.3s ease;
+    color: #240eee;
+}
+
+nav ul li a.active, nav ul li a:hover {
+    background: #EDE7F6;
+}
+
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .container {
+        max-width: 500px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 600px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    .circle {
+        width: 200px;
+        height: 200px;
+    }
+
+    .circle p {
+        font-size: 18px;
+    }
+
+    .steps {
+        font-size: 32px;
+    }
+
+    .info-button {
+        font-size: 16px;
+    }
+
+    .create-route-button {
+        font-size: 18px;
+    }
+
+    nav ul li a {
+        font-size: 16px;
+    }
+}
+
+/* Form styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 5px;
+}
+
+form input, form textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button {
+    background: #20d4ae;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+form button:hover {
+    background: #4500b3;
+}
+/* グラフページのスタイルを追加 */
+
+.form-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #800080; /* 紫色 */
+}
+
+input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #20d4ae; /* 紫色 */
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #20d4ae; /* エメラルドグリーン */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1bbba3; /* ホバー時の色 */
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.chart-wrapper {
+    width: 100%;
+    height: 200px;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+/* グラフページのスタイルを追加 */
+
+.form-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #800080; /* 紫色 */
+}
+
+input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #20d4ae;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #20d4ae; /* エメラルドグリーン */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1bbba3; /* ホバー時の色 */
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.chart-wrapper {
+    width: 100%;
+    height: 200px;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* マップページのスタイルを追加 */
+#map {
+    height: 65vh;
+    width: 100%;
+}
+
+#controls {
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    #controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #controls label,
+    #controls input,
+    #controls button {
+        width: 100%;
+        max-width: 300px;
+        margin: 5px 0;
+    }
+}
+
+:disabled {
+    background-color: #bebebe;
+    color:  #6c757d;
+    cursor: not-allowed;
+  }
+
+:disabled::placeholder {
+    color: #fff;
+}  

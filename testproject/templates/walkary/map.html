@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walkary</title>
+    <link rel="stylesheet" href="{% static 'walkary/css/map.css' %}" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-wUdCx7jMv78-AZ_8LCo9_qPyQJBYmHQ&libraries=geometry"></script>
+    <script src="{% static 'walkary/js/map.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <main>
+            <div id="controls">
+                <label for="start">スタート地点:</label>
+                <input type="text" id="start" placeholder="住所または場所名を入力">
+                <br>
+                <label for="end">ゴール地点:</label>
+                <input type="text" id="end" placeholder="住所または場所名を入力">
+                <br>
+                地図上で指定
+                <button onclick="setMapClickMode('start')">スタート地点</button>
+                <button onclick="setMapClickMode('end')">ゴール地点</button>
+                <br>
+                <label for="distance">距離 (km):</label>
+                <input type="number" id="distance" name="distance" value="5" min="1" max="20">
+                <button onclick="generateRoute()">ルート生成</button>
+                <br>
+                <div id="route-distance">ルートの距離: </div>
+            </div>
+            <div id="map"></div>
+        </main>
+        <nav>
+            <ul>
+                <li><a href="{% url 'walkary:home' %}">ホーム</a></li>
+                <li><a href="{% url 'walkary:map' %}" class="active">マップ</a></li>
+                <li><a href="{% url 'walkary:graph' %}">グラフ</a></li>
+                <li><a href="{% url 'walkary:mypage' %}">マイページ</a></li>
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>
