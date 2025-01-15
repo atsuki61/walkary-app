@@ -1,8 +1,8 @@
 let map, currentLocationMarker, path, polyline, directionsService, directionsRenderer, geocoder;
-let startPoint = null;
-let endPoint = null;
-let startMarker = null;  // スタート地点のマーカー
-let endMarker = null;    // ゴール地点のマーカー
+let startPoint;
+let endPoint;
+let startMarker;  // スタート地点のマーカー
+let endMarker;    // ゴール地点のマーカー
 let mapClickMode = null;
 let currentLocation; // 現在地を保持する変数
 
@@ -138,8 +138,8 @@ function calculateWalkedDistance() {
         totalWalkedDistance += google.maps.geometry.spherical.computeDistanceBetween(start, end);
     }
 
-    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} km`);
-    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} km`;
+    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(3)} km`);
+    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(3)} km`;
 
     return totalWalkedDistance; // 計算結果を返す
 }
@@ -175,6 +175,31 @@ function save_distance() {
 function handleError(error) {
     console.warn(`ERROR(${error.code}): ${error.message}`);
 }
+
+function saveDistanceToServer() {
+    const walkedDistance = JSON.parse(localStorage.getItem("walked_distance")) || 0;
+
+    fetch('/api/save_step_data/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')  // 必要に応じてCSRFトークンを送信
+        },
+        body: JSON.stringify({
+            steps: walkedDistance  // メートル単位の歩数を送信
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+        } else {
+            console.error(data.error);
+        }
+    })
+    .catch(error => console.error('エラー:', error));
+}
+
 
 function handleLocationError(browserHasGeolocation, pos) {
     map.setCenter(pos);

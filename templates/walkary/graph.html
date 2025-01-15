@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="chart-container">
+        <div class="chart-container" style="width: 80%; height: 500px; margin: auto;">
             <canvas id="stepsChart"></canvas>
         </div>
         <nav>
@@ -26,9 +26,38 @@
         document.addEventListener("DOMContentLoaded", function () {
             const walkedData = JSON.parse(localStorage.getItem('walked_data')) || [];
 
-            const labels = walkedData.map(item => item.date);
-            const steps = walkedData.map(item => item.steps);
+            // データを日付でソート
+            walkedData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
+            // 日付範囲を生成
+            const dateRange = [];
+            const startDate = new Date(walkedData[0]?.date || new Date().toISOString().split('T')[0]);
+            const endDate = new Date(walkedData[walkedData.length - 1]?.date || new Date().toISOString().split('T')[0]);
+
+            for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+                dateRange.push(new Date(d).toISOString().split('T')[0]);
+            }
+
+            // 日付範囲を元にデータを補完
+            const completeData = dateRange.map(date => {
+                const existingEntry = walkedData.find(item => item.date === date);
+                return existingEntry ? existingEntry : { date: date, steps: 0 };
+            });
+
+            // デフォルトで直近7日間のデータを抽出
+            const recentData = completeData.slice(-7);
+
+            // 年を除いた日付を作成
+            const labels = recentData.map(item => {
+                const date = new Date(item.date);
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${month}-${day}`;
+            });
+
+            const steps = recentData.map(item => item.steps);
+
+            // グラフを描画
             const ctx = document.getElementById('stepsChart').getContext('2d');
             new Chart(ctx, {
                 type: 'line',
@@ -44,18 +73,13 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true,
                             title: {
                                 display: true,
                                 text: '歩いた距離 (m)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: '日付'
                             }
                         }
                     }
