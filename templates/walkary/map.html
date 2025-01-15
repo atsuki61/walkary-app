@@ -34,13 +34,18 @@
                 <div id="walked-distance">歩いた距離: </div>
                 <div id="route-duration"></div>
             </div>
-            <div id="map"></div>
+            {% comment %} <div id="map"></div>
             <br>
-            <button onclick="save_distance()">距離を保存</button>
+            <button onclick="save_distance()">距離を保存</button> {% endcomment %}
             {% comment %} <button onclick="savePolyline()">ポリライン保存</button>
             <button onclick="loadPolyline()">読み込み</button> {% endcomment %}
 
         </main>
+        
+        <div id="map"></div>
+        <br>
+        <button onclick="save_distance()">距離を保存</button>
+
         <nav>
             <ul>
                 <li><a href="{% url 'walkary:home' %}">ホーム</a></li>
