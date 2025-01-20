@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <body>
+    <form method="POST" action="{% url 'walkary:create_account' %}">
+      {% csrf_token %}
+
+      <!-- Existing User Fields -->
+      <label>ユーザーID</label>
+      {{ user_form.username }}
+      {{ user_form.username.errors }}
+
+      <label>パスワード</label>
+      {{ user_form.password1 }}
+      {{ user_form.password1.errors }}
+
+      <label>パスワード(確認)</label>
+      {{ user_form.password2 }}
+      {{ user_form.password2.errors }}
+
+      <!-- New Profile Fields -->
+      <label>名前</label>
+      {{ profile_form.name }}
+      {{ profile_form.name.errors }}
+
+      <label>年齢</label>
+      {{ profile_form.age }}
+      {{ profile_form.age.errors }}
+
+      <label>身長 (cm)</label>
+      {{ profile_form.height }}
+      {{ profile_form.height.errors }}
+
+      <label>体重 (kg)</label>
+      {{ profile_form.weight }}
+      {{ profile_form.weight.errors }}
+
+      <label>性別</label>
+      {{ profile_form.gender }}
+      {{ profile_form.gender.errors }}
+
+      <label>目標 (歩数)</label>
+      {{ profile_form.goal }}
+      {{ profile_form.goal.errors }}
+
+      <button type="submit">登録</button>
+    </form>
+  </body>
+</html>
