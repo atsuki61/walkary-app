@@ -163,7 +163,7 @@ function updatePosition(position) {
 }
 function save_distance() {
     const totalWalkedDistance = calculateWalkedDistance(); // 計算結果を取得
-    localStorage.setItem("walked_distance", JSON.stringify(totalWalkedDistance));
+    localStorage.setItem("walked_distance", JSON.stringify(totalWalkedDistance.toFixed(2)));
     alert("保存できたよ");
 
     // 保存後に変更イベントをトリガー
