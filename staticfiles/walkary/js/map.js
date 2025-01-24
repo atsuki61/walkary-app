@@ -138,8 +138,8 @@ function calculateWalkedDistance() {
         totalWalkedDistance += google.maps.geometry.spherical.computeDistanceBetween(start, end);
     }
 
-    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(3)} km`);
-    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(3)} km`;
+    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
+    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
 
     return totalWalkedDistance; // 計算結果を返す
 }

@@ -34,18 +34,12 @@
                 <div id="walked-distance">歩いた距離: </div>
                 <div id="route-duration"></div>
             </div>
-            {% comment %} <div id="map"></div>
-            <br>
-            <button onclick="save_distance()">距離を保存</button> {% endcomment %}
             {% comment %} <button onclick="savePolyline()">ポリライン保存</button>
             <button onclick="loadPolyline()">読み込み</button> {% endcomment %}
-
         </main>
-        
         <div id="map"></div>
-        <br>
-        <button onclick="save_distance()">距離を保存</button>
-
+            <br>
+            <button onclick="save_distance()">距離を保存</button>
         <nav>
             <ul>
                 <li><a href="{% url 'walkary:home' %}">ホーム</a></li>
@@ -60,7 +54,13 @@
         window.addEventListener("storage", (event) => {
             if (event.key === "walked_distance") {
                 const newDistance = JSON.parse(event.newValue);
-                document.getElementById("walked-distance").innerText = `歩いた距離: ${newDistance} m`;
+                document.getElementById("walked-distance").innerText = `歩いた距離: ${newDistance.toFixed(2)} m`;
+            }
+        });
+        // 初期表示用の処理
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof totalWalkedDistance !== "undefined") {
+                document.getElementById("walked-distance").innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
             }
         });
     </script>
