@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="{% static 'walkary/css/Login-Design.css' %}">
 </head>
 <body>
+    {% if form.errors  %}
+    <p>ユーザーID, パスワードが一致しません．</p>
+    {% endif %}
     <div id="form-ui">
         <form method="POST" action="{% url 'walkary:login' %}" id="form">
           {% csrf_token %}
