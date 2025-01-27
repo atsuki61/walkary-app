@@ -141,8 +141,8 @@ function calculateWalkedDistance() {
         totalWalkedDistance += google.maps.geometry.spherical.computeDistanceBetween(start, end);
     }
 
-    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} km`);
-    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} km`;
+    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
+    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
 
     return totalWalkedDistance; // 計算結果を返す
 }
@@ -175,7 +175,7 @@ function updatePosition(position) {
     const currentTime = Date.now(); // 現在のタイムスタンプ（ミリ秒）
 
     // 最初の更新、または指定秒数以上経過した場合のみ更新
-    if (!lastUpdateTime || (currentTime - lastUpdateTime) >= 8000) {
+    if (!lastUpdateTime || (currentTime - lastUpdateTime) >= 5000) {
         const newLocation = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
