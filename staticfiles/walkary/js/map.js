@@ -194,8 +194,6 @@ function updatePosition(position) {
 
         // 更新地点を保存
         path.push(new google.maps.LatLng(newLocation.lat, newLocation.lng));
-        console.log('Path updated:', path.getArray());
-
 
         // 現在地マーカーを更新
         currentLocationMarker.setPosition(newLocation);
