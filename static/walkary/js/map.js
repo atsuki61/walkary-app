@@ -138,105 +138,32 @@ function calculateWalkedDistance() {
         totalWalkedDistance += google.maps.geometry.spherical.computeDistanceBetween(start, end);
     }
 
-    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
-    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
+    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(3)} km`);
+    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(3)} km`;
 
     return totalWalkedDistance; // 計算結果を返す
 }
-// ログ表示用セクションの初期化
-function initLogSection() {
-    const logContainer = document.createElement('div');
-    logContainer.id = 'log-container';
-    logContainer.style.border = '1px solid #ccc';
-    logContainer.style.padding = '10px';
-    logContainer.style.marginTop = '10px';
-    logContainer.style.maxHeight = '200px';
-    logContainer.style.overflowY = 'scroll';
-    document.querySelector('.container').appendChild(logContainer);
-}
-
-// ログを表示する関数
-function addLog(message) {
-    const logContainer = document.getElementById('log-container');
-    if (!logContainer) return;
-
-    const logEntry = document.createElement('div');
-    logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
-    logEntry.style.borderBottom = '1px solid #eee';
-    logEntry.style.padding = '5px 0';
-
-    logContainer.appendChild(logEntry);
-
-    // スクロールを最新ログに合わせる
-    logContainer.scrollTop = logContainer.scrollHeight;
-}
-
-let lastPosition = null; // 前回の位置情報を保持
-
-// updatePosition 関数にログ表示を追加
+// updatePosition 関数に歩いた距離の更新を追加
 function updatePosition(position) {
     if (position.coords.accuracy > 20) {
         console.warn('Accuracy too low:', position.coords.accuracy);
-        addLog(`精度が低いため、位置情報を更新しませんでした (精度: ${position.coords.accuracy} m)`);
         return;
     }
 
-    const newLocation = {
+    currentLocation = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
     };
 
-    // 前回の位置情報が存在し、30m未満の移動であれば更新しない
-    if (lastPosition) {
-        const distance = google.maps.geometry.spherical.computeDistanceBetween(
-            new google.maps.LatLng(lastPosition.lat, lastPosition.lng),
-            new google.maps.LatLng(newLocation.lat, newLocation.lng)
-        );
-
-        if (distance < 30) {
-            addLog(`移動距離が30m未満のため更新をスキップしました: ${distance.toFixed(2)} m`);
-            return;
-        }
-    }
-
-    lastPosition = newLocation; // 現在の位置を保存
-
-    currentLocation = newLocation;
     currentLocationMarker.setPosition(currentLocation);
     path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
 
     // 歩いた距離を更新
-    const walkedDistance = calculateWalkedDistance();
-    addLog(`位置が更新されました: 緯度 ${currentLocation.lat}, 経度 ${currentLocation.lng}, 歩いた距離: ${walkedDistance.toFixed(2)} m`);
+    calculateWalkedDistance();
 }
-
-// 初期化時にログセクションを追加
-window.onload = function () {
-    initMap();
-    initLogSection();
-};
-
-// // updatePosition 関数に歩いた距離の更新を追加
-// function updatePosition(position) {
-//     if (position.coords.accuracy > 20) {
-//         console.warn('Accuracy too low:', position.coords.accuracy);
-//         return;
-//     }
-
-//     currentLocation = {
-//         lat: position.coords.latitude,
-//         lng: position.coords.longitude
-//     };
-
-//     currentLocationMarker.setPosition(currentLocation);
-//     path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
-
-//     // 歩いた距離を更新
-//     calculateWalkedDistance();
-// }
 function save_distance() {
     const totalWalkedDistance = calculateWalkedDistance(); // 計算結果を取得
-    localStorage.setItem("walked_distance", JSON.stringify(totalWalkedDistance.toFixed(2)));
+    localStorage.setItem("walked_distance", JSON.stringify(totalWalkedDistance));
     alert("保存できたよ");
 
     // 保存後に変更イベントをトリガー
