@@ -173,6 +173,8 @@ function updatePosition(position) {
     }
 
     const currentTime = Date.now(); // 現在のタイムスタンプ（ミリ秒）
+    lastUpdateTime = currentTime;
+    
 
     // 最初の更新、または指定秒数以上経過した場合のみ更新
     if (!lastUpdateTime || (currentTime - lastUpdateTime) >= 5000) {
