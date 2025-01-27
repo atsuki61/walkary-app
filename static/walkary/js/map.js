@@ -171,6 +171,8 @@ function addLog(message) {
     logContainer.scrollTop = logContainer.scrollHeight;
 }
 
+let lastPosition = null; // 前回の位置情報を保持
+
 // updatePosition 関数にログ表示を追加
 function updatePosition(position) {
     if (position.coords.accuracy > 20) {
@@ -179,11 +181,27 @@ function updatePosition(position) {
         return;
     }
 
-    currentLocation = {
+    const newLocation = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
     };
 
+    // 前回の位置情報が存在し、30m未満の移動であれば更新しない
+    if (lastPosition) {
+        const distance = google.maps.geometry.spherical.computeDistanceBetween(
+            new google.maps.LatLng(lastPosition.lat, lastPosition.lng),
+            new google.maps.LatLng(newLocation.lat, newLocation.lng)
+        );
+
+        if (distance < 30) {
+            addLog(`移動距離が30m未満のため更新をスキップしました: ${distance.toFixed(2)} m`);
+            return;
+        }
+    }
+
+    lastPosition = newLocation; // 現在の位置を保存
+
+    currentLocation = newLocation;
     currentLocationMarker.setPosition(currentLocation);
     path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
 
