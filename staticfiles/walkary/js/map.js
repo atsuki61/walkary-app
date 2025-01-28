@@ -156,7 +156,7 @@ function calculateWalkedDistance() {
     return totalWalkedDistance;
 }
 
-// 10秒おきに歩いた距離を更新する関数を呼び出し
+// n秒おきに歩いた距離を更新する関数を呼び出し
 setInterval(() => {
     calculateWalkedDistance();
 }, 5000);
@@ -177,6 +177,12 @@ function updatePosition(position) {
     path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
 
 }
+
+// n秒おきに歩いた距離を更新する関数を呼び出し
+setInterval(() => {
+    calculateWalkedDistance();
+}, 5000);
+
 function save_distance() {
     const totalWalkedDistance = calculateWalkedDistance(); // 計算結果を取得
     localStorage.setItem("walked_distance", JSON.stringify(totalWalkedDistance));
