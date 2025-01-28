@@ -151,7 +151,7 @@ function calculateWalkedDistance() {
 
     // 距離を画面に表示
     console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
-    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
+    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)/50} m`;
 
     return totalWalkedDistance;
 }
