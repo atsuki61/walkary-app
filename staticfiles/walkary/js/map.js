@@ -194,23 +194,6 @@ function calculateWalkedDistance() {
     document.getElementById('walked-distance').innerText = `歩いた距離: ${(walkedDistance / 1000).toFixed(2)} km`;
 }
 
-// 移動平均フィルタ
-class MovingAverageFilter {
-    constructor(size) {
-        this.size = size;
-        this.values = [];
-    }
-
-    filter(value) {
-        this.values.push(value);
-        if (this.values.length > this.size) {
-            this.values.shift();
-        }
-        const sum = this.values.reduce((a, b) => a + b, 0);
-        return sum / this.values.length;
-    }
-}
-
 // 緯度経度のスムージング用フィルタ（直近5点を平均化）
 const latFilter = new MovingAverageFilter(5);
 const lngFilter = new MovingAverageFilter(5);
