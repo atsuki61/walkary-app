@@ -156,6 +156,11 @@ function calculateWalkedDistance() {
     return totalWalkedDistance;
 }
 
+// 10秒おきに歩いた距離を更新する関数を呼び出し
+setInterval(() => {
+    calculateWalkedDistance();
+}, 5000);
+
 // updatePosition 関数に歩いた距離の更新を追加
 function updatePosition(position) {
     if (position.coords.accuracy > 20) {
@@ -171,10 +176,6 @@ function updatePosition(position) {
     currentLocationMarker.setPosition(currentLocation);
     path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
 
-    // 10秒おきに歩いた距離を更新する関数を呼び出し
-    setInterval(() => {
-        calculateWalkedDistance();
-    }, 5000);
 }
 function save_distance() {
     const totalWalkedDistance = calculateWalkedDistance(); // 計算結果を取得
