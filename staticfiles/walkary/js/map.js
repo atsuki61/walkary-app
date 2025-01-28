@@ -141,7 +141,7 @@ function initPosition(position) {
 }*/
 
 function calculateWalkedDistance() {
-    let totalWalkedDistance = 0;
+    let totalWalkedDistance;
 
     for (let i = 0; i < path.getLength() - 1; i++) {
         const start = path.getAt(i); // 現在のポイント
