@@ -5,6 +5,9 @@ let startMarker;  // スタート地点のマーカー
 let endMarker;    // ゴール地点のマーカー
 let mapClickMode = null;
 let currentLocation; // 現在地を保持する変数
+let walkedDistance = 0; // 歩いた総距離（メートル）
+let lastUpdateTime = null; // 最後に更新した時刻
+
 
 class MovingAverageFilter {
     constructor(size) {
@@ -65,10 +68,15 @@ function initMap() {
         strokeOpacity: 1.0,
         strokeWeight: 2
     });
+    //ポリラインデータ読み込み開始
+    //ポリラインデータ読み込み終了
     polyline.setMap(map);
     directionsService = new google.maps.DirectionsService();
     directionsRenderer = new google.maps.DirectionsRenderer({ draggable: true });
     directionsRenderer.setMap(map);
+
+    //ポリラインデータ書き出し開始
+    //ポリラインデータ書き出し終了
 
     google.maps.event.addListener(directionsRenderer, 'directions_changed', () => {
         const result = directionsRenderer.getDirections();
@@ -124,8 +132,7 @@ function initPosition(position) {
         maximumAge: 0
     });
 }
-
-/*function calculateWalkedDistance() {
+function calculateWalkedDistance() {
     let totalWalkedDistance = 0;
 
     for (let i = 0; i < path.getLength() - 1; i++) {
@@ -138,47 +145,68 @@ function initPosition(position) {
     document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
 
     return totalWalkedDistance; // 計算結果を返す
-}*/
-
-function calculateWalkedDistance() {
-    let totalWalkedDistance = 0;
-
-    for (let i = 0; i < path.getLength() - 1; i++) {
-        const start = path.getAt(i); // 現在のポイント
-        const end = path.getAt(i + 1); // 次のポイント
-        totalWalkedDistance += google.maps.geometry.spherical.computeDistanceBetween(start, end);
-    }
-
-    // 距離を画面に表示
-    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
-    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
-
-    return totalWalkedDistance;
 }
+// // updatePosition 関数に歩いた距離の更新を追加
+// function updatePosition(position) {
+//     if (position.coords.accuracy > 20) {
+//         console.warn('Accuracy too low:', position.coords.accuracy);
+//         return;
+//     }
 
-// 10秒おきに歩いた距離を更新する関数を呼び出し
-setInterval(() => {
-    calculateWalkedDistance();
-}, 10000);
+//     currentLocation = {
+//         lat: position.coords.latitude,
+//         lng: position.coords.longitude
+//     };
 
-// updatePosition 関数に歩いた距離の更新を追加
+//     currentLocationMarker.setPosition(currentLocation);
+//     path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
+
+//     // 歩いた距離を更新
+//     calculateWalkedDistance();
+// }
+
+
 function updatePosition(position) {
     if (position.coords.accuracy > 20) {
         console.warn('Accuracy too low:', position.coords.accuracy);
         return;
     }
 
-    currentLocation = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-    };
+    const currentTime = Date.now(); // 現在のタイムスタンプ（ミリ秒）
 
-    currentLocationMarker.setPosition(currentLocation);
-    path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
+    // 最初の更新、または指定秒数以上経過した場合のみ更新
+    if (!lastUpdateTime || (currentTime - lastUpdateTime) >= 8000) {
+        const newLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
 
-    // 歩いた距離を更新
-    calculateWalkedDistance();
+        // 距離を計測し、加算（オプション）
+        if (path.length > 0) {
+            const lastLocation = path[path.length - 1];
+            const distance = google.maps.geometry.spherical.computeDistanceBetween(
+                new google.maps.LatLng(lastLocation.lat(), lastLocation.lng()),
+                new google.maps.LatLng(newLocation.lat, newLocation.lng)
+            );
+
+            walkedDistance += distance; // 合計距離を更新
+        }
+
+        // 更新地点を保存
+        path.push(new google.maps.LatLng(newLocation.lat, newLocation.lng));
+
+        // 現在地マーカーを更新
+        currentLocationMarker.setPosition(newLocation);
+
+        // 距離を表示または更新
+        calculateWalkedDistance();
+
+        // 更新時刻を記録
+        lastUpdateTime = currentTime;
+    }
 }
+
+
 function save_distance() {
     const totalWalkedDistance = calculateWalkedDistance(); // 計算結果を取得
     localStorage.setItem("walked_distance", JSON.stringify(totalWalkedDistance));
@@ -187,12 +215,37 @@ function save_distance() {
     // 保存後に変更イベントをトリガー
     window.dispatchEvent(new StorageEvent("storage", {
         key: "walked_distance",
-        newValue: JSON.stringify(totalWalkedDistance.toFixed(2))
+        newValue: JSON.stringify(totalWalkedDistance)
     }));
 }
 function handleError(error) {
     console.warn(`ERROR(${error.code}): ${error.message}`);
 }
+
+function saveDistanceToServer() {
+    const walkedDistance = JSON.parse(localStorage.getItem("walked_distance")) || 0;
+
+    fetch('/api/save_step_data/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')  // 必要に応じてCSRFトークンを送信
+        },
+        body: JSON.stringify({
+            steps: walkedDistance  // メートル単位の歩数を送信
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+        } else {
+            console.error(data.error);
+        }
+    })
+    .catch(error => console.error('エラー:', error));
+}
+
 
 function handleLocationError(browserHasGeolocation, pos) {
     map.setCenter(pos);
