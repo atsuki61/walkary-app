@@ -47,19 +47,19 @@
                 </div>
                 <div id="input-area">
                   <div class="form-inp">
-                        {{ user_form.username.as_widget(attrs={'placeholder': 'ユーザーID'}) }}
+                        {{ user_form.username }}
                         <span class="error">{{ user_form.username.errors }}</span>
                     </div>
                     <div class="form-inp">
-                        {{ user_form.password1.as_widget(attrs={'placeholder': 'パスワード'}) }}
+                        {{ user_form.password1 }}
                       <span class="error">{{ user_form.password1.errors }}</span>
                     </div>
                       <div class="form-inp">
-                          {{ user_form.password2.as_widget(attrs={'placeholder': '確認用パスワード'}) }}
+                          {{ user_form.password2 }}
                           <span class="error">{{ user_form.password2.errors }}</span>
                       </div>
                       <div class="form-inp">
-                          {{ profile_form.name.as_widget(attrs={'placeholder': 'ユーザー名'}) }}
+                          {{ profile_form.name }}
                           <span class="error">{{ profile_form.name.errors }}</span>
                       </div>
                   </div>
