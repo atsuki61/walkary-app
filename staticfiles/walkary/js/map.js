@@ -5,6 +5,7 @@ let startMarker;  // スタート地点のマーカー
 let endMarker;    // ゴール地点のマーカー
 let mapClickMode = null;
 let currentLocation; // 現在地を保持する変数
+let totalWalkedDistance = 0;
 
 class MovingAverageFilter {
     constructor(size) {
@@ -141,7 +142,6 @@ function initPosition(position) {
 }*/
 
 function calculateWalkedDistance() {
-    let totalWalkedDistance;
 
     for (let i = 0; i < path.getLength() - 1; i++) {
         const start = path.getAt(i); // 現在のポイント
@@ -159,7 +159,7 @@ function calculateWalkedDistance() {
 // 10秒おきに歩いた距離を更新する関数を呼び出し
 setInterval(() => {
     calculateWalkedDistance();
-}, 10000);
+}, 5000);
 
 // updatePosition 関数に歩いた距離の更新を追加
 function updatePosition(position) {
