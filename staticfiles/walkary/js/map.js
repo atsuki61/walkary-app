@@ -190,8 +190,8 @@ function calculateWalkedDistance() {
     }
 
     walkedDistance = totalWalkedDistance; // 合計距離を更新
-    console.log(`Total Walked Distance: ${walkedDistance.toFixed(2)} meters`);
-    document.getElementById('walked-distance').innerText = `歩いた距離: ${(walkedDistance / 1000).toFixed(2)} km`;
+    console.log(`Total Walked Distance: ${walkedDistance.toFixed(2)} m`);
+    document.getElementById('walked-distance').innerText = `歩いた距離: ${(walkedDistance / 1000).toFixed(2)} m`;
 }
 
 // 緯度経度のスムージング用フィルタ（直近5点を平均化）
