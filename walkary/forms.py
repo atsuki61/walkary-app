@@ -26,6 +26,12 @@ class UserCreateForm(UserCreationForm):
         fields = ("username", "password1", "password2",)
 
 class UserProfileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({
+            'placeholder': 'ユーザー名'
+        })
+        
     class Meta:
         model = UserProfile
         fields = ['name', 'age', 'height', 'weight', 'gender', 'goal']
