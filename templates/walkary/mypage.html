@@ -5,10 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>walkary</title>
+    <link rel="stylesheet" href="{% static 'walkary/css/common.css' %}">
     <link rel="stylesheet" href="{% static 'walkary/css/mypage.css' %}">
 </head>
 <body>
     <div class="container">
+        <form method="post" action="{% url 'walkary:logout' %}" id="logout-form">
+            {% csrf_token %}
+            <button type="submit">ログアウト</button>
+        <!-- <img src="{% static 'walkary/icons/logout.png' %}" alt="ログアウトアイコン" style="width:16px; height:16px;">-->  
+        </form>
         <main>
             <section>
                 <h2>ユーザー情報</h2>
@@ -28,7 +34,7 @@
                 <form method="post" action="{% url 'walkary:mypage' %}">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit">保存</button>
+            <button type="submit">保存</button>
                 </form>
             </div>
         </main>
@@ -42,22 +48,19 @@
         </script>
         <nav>
             <ul>
-                <li><a href="{% url 'walkary:home' %}">ホーム</a></li>
-                <li><a href="{% url 'walkary:map' %}">マップ</a></li>
-                <li><a href="{% url 'walkary:graph' %}">グラフ</a></li>
-                <li><a href="{% url 'walkary:mypage' %}" class="active">マイページ</a></li>
+                <li><a href="{% url 'walkary:home' %}" ><img src="{% static 'walkary/icons/home.png' %}"alt="ホームアイコン"><br><small>ホーム</small></a></li>
+                <li><a href="{% url 'walkary:map' %}"><img src="{% static 'walkary/icons/map.png' %}" alt="マップアイコン"><br><small>マップ</small></a></li>
+                <li><a href="{% url 'walkary:graph' %}"><img src="{% static 'walkary/icons/graph.png' %}" alt="グラフアイコン"><br><small>グラフ</small></a></li>
+                <li><a href="{% url 'walkary:mypage' %}" class="active"><img src="{% static 'walkary/icons/mypage.png' %}" alt="マイページアイコン"><br><small>マイページ</small></a></li>
             </ul>
         </nav>
-        <form method="post" action="{% url 'walkary:logout' %}">
-            {% csrf_token %}
-            <button type="submit">ログアウト</button>
-        </form>
+
     </div>
 
     <script>
         function toggleForm() {
             var form = document.getElementById("form");
-            form.classList.toggle("hidden");
+            form.classList.toggle("show");
         }
     </script>
 </body>

@@ -1,155 +1,146 @@
-/* 基本設定 */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-/* コンテナ */
-.container {
-    width: 100%;
-    max-width: 500px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    padding: 20px;
-    margin: 20px;
-}
-
-/* ヘッダー */
-header {
-    text-align: center;
-    padding: 20px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-header h1 {
-    font-size: 1.8em;
-    color: #007bff;
-}
-
-/* メインセクション */
 main {
     padding: 20px;
 }
 
-section h2 {
-    font-size: 1.4em;
-    color: #007bff;
-    margin-bottom: 10px;
+.container {
+    position: relative;
 }
 
-section p {
-    font-size: 1em;
-    margin: 5px 0;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
+#info {
+    margin-bottom: 30px;
+    padding: 30px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.8;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* ボタン */
+#info:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    #info {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+    }
+}
+
+#info p {
+    margin: 8px 0; /* 各段落の間隔を調整 */
+}
+
+h2 {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
 button {
-    width: 100%;
-    padding: 12px;
-    font-size: 1em;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: background-color 0.3s;
+    display: block;
+    margin: 0 auto;
 }
 
-button:hover {
-    background-color: #0056b3;
-}
 
-/* フォーム */
 #form {
     margin-top: 20px;
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+    max-height: 0; /* 初期状態で非表示 */
+}
+
+/* フォームコンテナのスタイル修正 */
+#form.show {
+    max-height: 1000px; /* 十分な高さを確保 */
+    overflow-y: auto; /* スクロール可能に */
+    padding: 15px 0;
+}
+
+/* 保存ボタンのスタイル調整 */
+#form button[type="submit"] {
+    margin: 20px auto;
+    padding: 12px 30px;
+    width: auto;
+}
+
+/* スマホ用調整 */
+@media (max-width: 480px) {
+    #form.show {
+        max-height: 100vh; /* 画面全体の高さを使用 */
+        padding: 10px 0;
+    }
+    
+    #form button[type="submit"] {
+        margin: 15px auto;
+        padding: 12px 25px;
+        font-size: 14px;
+    }
+    
+    /* 入力欄のスマホ最適化 */
+    input {
+        width: 90%;
+        margin: 0 auto 10px;
+    }
 }
 
 label {
-    font-size: 0.9em;
-    color: #333;
-    margin-top: 10px;
-    display: block;
+    font-size: 1em;
+    margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="number"],
-select {
-    width: 100%;
+input {
+    width: calc(100% - 22px);
     padding: 10px;
-    font-size: 1em;
-    margin-top: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
-input[type="submit"] {
-    width: 100%;
-    padding: 12px;
-    font-size: 1em;
-    background-color: #28a745;
+#logout-form {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#logout-form button {
+    background-color: #e74c3c; /* 警告色で目立つ赤系 */
     color: #fff;
     border: none;
     border-radius: 8px;
+    padding: 10px 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-input[type="submit"]:hover {
-    background-color: #218838;
-}
-
-/* ナビゲーション */
-nav ul {
-    list-style: none;
+    transition: all 0.3s ease;
     display: flex;
-    justify-content: space-around;
-    padding: 15px 0;
-    border-top: 1px solid #ddd;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
 }
 
-nav ul li {
-    flex: 1;
-    text-align: center;
+#logout-form button:hover {
+    background-color: #c0392b; /* 濃い赤に変化 */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-nav ul li a {
-    color: #333;
-    text-decoration: none;
-    font-size: 1em;
-    padding: 10px;
-    display: block;
-    transition: color 0.3s;
-}
-
-nav ul li a.active,
-nav ul li a:hover {
-    color: #007bff;
+#logout-form button img {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) invert(1); /* アイコンを白く */
 }
 
 /* 広告 */
 div[style="text-align: center"] {
     margin-top: 20px;
-}
-
-/* 表示・非表示の切り替え */
-.hidden {
-    display: none;
 }

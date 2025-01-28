@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walkary</title>
+    <link rel="stylesheet" href="{% static 'walkary/css/common.css' %}">
     <link rel="stylesheet" href="{% static 'walkary/css/home.css' %}">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-wUdCx7jMv78-AZ_8LCo9_qPyQJBYmHQ&libraries=geometry"></script>
+
     <script src="{% static 'walkary/js/map.js' %}"></script>
     <script src="{% static 'walkary/js/update_remaining.js' %}"></script>
     <script src="{% static 'walkary/js/kcal_calculation.js' %}"></script>
@@ -15,9 +16,13 @@
     <div class="container">
         <main>
             <div class="circle">
-                <p>目標 <span id="target-goal">{{ goal }}</span>m</p>
-                <p>現在 <span id="walked-distance"></span></p>
-                <p>残り： <span id="remaining"></span></p>
+                <svg class="progress-circle" width="300" height="300" viewBox="0 0 100 100">
+                    <circle class="progress-background" cx="50" cy="50" r="48"></circle>
+                    <circle class="progress" cx="50" cy="50" r="48"></circle>
+                </svg>
+                <p>あと <span id="remaining"></span></p>
+                <p><span id="walked-distance"></span></p>
+                <p>/ <span id="target-goal">{{ goal }}</span>m</p>
             </div>
             <div class="info-buttons">
                 <button class="info-button" id="walk-kcal">kcal(歩いた場合)</button>
@@ -27,10 +32,10 @@
         </main>
         <nav>
             <ul>
-                <li><a href="{% url 'walkary:home'%}" class="active">ホーム</a></li>
-                <li><a href="{% url 'walkary:map' %}">マップ</a></li>
-                <li><a href="{% url 'walkary:graph' %}">グラフ</a></li>
-                <li><a href="{% url 'walkary:mypage' %}">マイページ</a></li>
+                <li> <a href="{% url 'walkary:home' %}" class="active"><img src="{% static 'walkary/icons/home.png' %}"alt="ホームアイコン"><br><small>ホーム</small></a></li>
+                <li> <a href="{% url 'walkary:map' %}"><img src="{% static 'walkary/icons/map.png' %}" alt="マップアイコン"><br><small>マップ</small></a></li>
+                <li> <a href="{% url 'walkary:graph' %}"><img src="{% static 'walkary/icons/graph.png' %}" alt="グラフアイコン"><br><small>グラフ</small></a></li>
+                <li> <a href="{% url 'walkary:mypage' %}"><img src="{% static 'walkary/icons/mypage.png' %}" alt="マイページアイコン"><br><small>マイページ</small></a></li>
             </ul>
         </nav>
     </div>

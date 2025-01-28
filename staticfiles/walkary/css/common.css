@@ -1,0 +1,145 @@
+:root {
+    --primary-color: #6C9BCF;
+    --primary-hover: #8AB4E6;
+    --secondary-color: #F5F7FA;
+    --text-color: #2C3E50;
+    --border-color: #DEE2E6;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: var(--secondary-color);
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+}
+
+
+.container {
+    font-family: 'Noto Sans JP', sans-serif;
+    margin: 2rem auto;
+    padding: 2rem;
+    padding-bottom: 90px; /* ナビゲーションバーの高さ分の余白 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: calc(100vh - 4rem);
+    width: 100%;
+    max-width: 600px;
+    background: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    overflow: hidden; /* スクロールを無効化 */
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 1.1em;
+    position: relative;
+}
+
+
+
+
+button {
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.form-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+/* ナビゲーションのスタイル */
+nav {
+    border-top: 1px solid var(--border-color);
+    background: var(--secondary-color);
+    width: 100%;
+    padding: 8px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+nav ul li {
+    flex: 1;
+    margin: 0 4px;
+}
+
+nav ul li a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    color: var(--primary-color);
+    border-radius: 8px;
+    min-height: 48px;
+}
+
+nav ul li a img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+}
+
+nav ul li a.active, nav ul li a:hover {
+    background: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+/* スマホ用スタイル */
+@media (max-width: 480px) {
+    nav ul li a {
+        font-size: 12px;
+        padding: 8px;
+    }
+    
+    nav ul li a img {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .container {
+        padding-bottom: 64px;
+        max-width: 100%;
+        margin: 0;
+        padding: 1rem;
+        padding-bottom: 120px;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+    }
+}
