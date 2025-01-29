@@ -178,10 +178,10 @@ function updatePosition(position) {
 
 }
 
-// n秒おきに歩いた距離を更新する関数を呼び出し
-setInterval(() => {
-    calculateWalkedDistance();
-}, 5000);
+// // n秒おきに歩いた距離を更新する関数を呼び出し
+// setInterval(() => {
+//     calculateWalkedDistance();
+// }, 5000);
 
 function save_distance() {
     const totalWalkedDistance = calculateWalkedDistance(); // 計算結果を取得
