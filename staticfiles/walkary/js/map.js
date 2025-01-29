@@ -146,7 +146,7 @@ function calculateWalkedDistance() {
     for (let i = 0; i < path.getLength() - 1; i++) {
         const start = path.getAt(i); // 現在のポイント
         const end = path.getAt(i + 1); // 次のポイント
-        totalWalkedDistance += google.maps.geometry.spherical.computeDistanceBetween(start, end)/100;
+        totalWalkedDistance += google.maps.geometry.spherical.computeDistanceBetween(start, end)/150;
     }
 
     // 距離を画面に表示
