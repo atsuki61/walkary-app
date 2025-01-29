@@ -4,7 +4,7 @@ let endPoint;
 let startMarker;  // スタート地点のマーカー
 let endMarker;    // ゴール地点のマーカー
 let mapClickMode = null;
-let currentLocation;
+let currentLocation =null;
 let lastRecordedLocation = null; // 現在地を保持する変数
 let totalWalkedDistance = 0;
 
