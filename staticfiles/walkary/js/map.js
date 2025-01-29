@@ -157,32 +157,14 @@ function calculateWalkedDistance() {
     return totalWalkedDistance;
 }
 
-setInterval(() => {
-    if (lastRecordedLocation && currentLocation) {
-        const lastPoint = new google.maps.LatLng(lastRecordedLocation.lat, lastRecordedLocation.lng);
-        const currentPoint = new google.maps.LatLng(currentLocation.lat, currentLocation.lng);
-        const distance = google.maps.geometry.spherical.computeDistanceBetween(lastPoint, currentPoint);
-
-        if (distance >= 3) {
-            totalWalkedDistance += distance;
-        }
-
-        lastRecordedLocation = { ...currentLocation };
-
-        console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
-        document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
-
-        calculateWalkedDistance();
-    }
-}, 5000);
 
 // n秒おきに歩いた距離を更新する関数を呼び出し
-// setInterval(() => {
-//     calculateWalkedDistance();
-// }, 5000);
+setInterval(() => {
+    calculateWalkedDistance();
+}, 5000);
 
 // updatePosition 関数に歩いた距離の更新を追加
-function updatePosition(position) {
+/*function updatePosition(position) {
     if (position.coords.accuracy > 20) {
         console.warn('Accuracy too low:', position.coords.accuracy);
         return;
@@ -196,8 +178,39 @@ function updatePosition(position) {
     currentLocationMarker.setPosition(currentLocation);
     path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
 
-}
+}*/
 
+function updatePosition(position) {
+    if (position.coords.accuracy > 20) {
+        console.warn('Accuracy too low:', position.coords.accuracy);
+        return;
+    }
+
+    const newLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+    };
+
+    // 最初の位置更新時
+    if (!lastRecordedLocation) {
+        lastRecordedLocation = new google.maps.LatLng(newLocation.lat, newLocation.lng);
+        return;
+    }
+
+    const newLatLng = new google.maps.LatLng(newLocation.lat, newLocation.lng);
+    const distance = google.maps.geometry.spherical.computeDistanceBetween(lastRecordedLocation, newLatLng);
+
+    // 一定距離以上移動した場合のみ記録
+    if (distance > 5) { // 5m以上移動した場合に追加
+        totalWalkedDistance += distance;
+        lastRecordedLocation = newLatLng;
+        path.push(newLatLng);
+        currentLocationMarker.setPosition(newLocation);
+
+        console.log(`累積距離: ${totalWalkedDistance.toFixed(2)} m`);
+        document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
+    }
+}
 
 function save_distance() {
     const totalWalkedDistance = calculateWalkedDistance(); // 計算結果を取得
