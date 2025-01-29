@@ -141,7 +141,7 @@ function initPosition(position) {
     return totalWalkedDistance; // 計算結果を返す
 }*/
 
-function calculateWalkedDistance() {
+/*function calculateWalkedDistance() {
 
     for (let i = 0; i < path.getLength() - 1; i++) {
         const start = path.getAt(i); // 現在のポイント
@@ -154,12 +154,29 @@ function calculateWalkedDistance() {
     document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
 
     return totalWalkedDistance;
-}
+}*/
+
+setInterval(() => {
+    if (lastRecordedLocation && currentLocation) {
+        const lastPoint = new google.maps.LatLng(lastRecordedLocation.lat, lastRecordedLocation.lng);
+        const currentPoint = new google.maps.LatLng(currentLocation.lat, currentLocation.lng);
+        const distance = google.maps.geometry.spherical.computeDistanceBetween(lastPoint, currentPoint);
+
+        if (distance >= 3) {
+            totalWalkedDistance += distance;
+        }
+
+        lastRecordedLocation = { ...currentLocation };
+
+        console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
+        document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
+    }
+}, 5000);
 
 // n秒おきに歩いた距離を更新する関数を呼び出し
-setInterval(() => {
-    calculateWalkedDistance();
-}, 5000);
+// setInterval(() => {
+//     calculateWalkedDistance();
+// }, 5000);
 
 // updatePosition 関数に歩いた距離の更新を追加
 function updatePosition(position) {
@@ -178,10 +195,6 @@ function updatePosition(position) {
 
 }
 
-// // n秒おきに歩いた距離を更新する関数を呼び出し
-// setInterval(() => {
-//     calculateWalkedDistance();
-// }, 5000);
 
 function save_distance() {
     const totalWalkedDistance = calculateWalkedDistance(); // 計算結果を取得
