@@ -46,23 +46,23 @@
                     <div id="welcome-line-2">新規登録</div>
                 </div>
                 <div id="input-area">
-                  <div class="form-inp">
+                    <div class="form-inp">
                         {{ user_form.username }}
-                        <span class="error">{{ user_form.username.errors }}</span>
                     </div>
+                    <span class="error">{{ user_form.username.errors }}</span>
                     <div class="form-inp">
                         {{ user_form.password1 }}
                       <span class="error">{{ user_form.password1.errors }}</span>
                     </div>
-                      <div class="form-inp">
-                          {{ user_form.password2 }}
-                          <span class="error">{{ user_form.password2.errors }}</span>
-                      </div>
-                      <div class="form-inp">
-                          {{ profile_form.name }}
-                          <span class="error">{{ profile_form.name.errors }}</span>
-                      </div>
-                  </div>
+                    <div class="form-inp">
+                        {{ user_form.password2 }}
+                        <span class="error">{{ user_form.password2.errors }}</span>
+                    </div>
+                    <div class="form-inp">
+                        {{ profile_form.name }}
+                        <span class="error">{{ profile_form.name.errors }}</span>
+                    </div>
+                </div>
                   <div id="submit-button-cvr">
                       <button id="submit-button" type="submit">登録</button>
                   </div>
