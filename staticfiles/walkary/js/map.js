@@ -8,6 +8,10 @@ let currentLocation =null; // 現在地を保持する変数
 let lastRecordedLocation = null;
 let totalWalkedDistance = 0;
 
+
+let lastUpdateTime = Date.now();
+const UPDATE_INTERVAL = 10000; // 10秒ごとに平均を計算
+
 class MovingAverageFilter {
     constructor(size) {
         this.size = size;
@@ -23,6 +27,11 @@ class MovingAverageFilter {
         return sum / this.values.length;
     }
 }
+
+let averageFilterLat = new MovingAverageFilter(10); // 10サンプル分の平均
+let averageFilterLng = new MovingAverageFilter(10);
+let stableLocation = null;
+
 function savePolyline() {
     const polylinePath = polyline.getPath().getArray().map(latLng => ({
         lat: latLng.lat(),
@@ -180,7 +189,7 @@ setInterval(() => {
 
 }*/
 
-function updatePosition(position) {
+/*function updatePosition(position) {
     if (position.coords.accuracy > 20) {
         console.warn('Accuracy too low:', position.coords.accuracy);
         return;
@@ -211,6 +220,49 @@ function updatePosition(position) {
 
         console.log(`累積距離: ${totalWalkedDistance.toFixed(2)} m`);
         document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
+    }
+}*/
+
+function updatePosition(position) {
+    if (position.coords.accuracy > 20) {
+        console.warn('Accuracy too low:', position.coords.accuracy);
+        return;
+    }
+
+    const newLat = averageFilterLat.filter(position.coords.latitude);
+    const newLng = averageFilterLng.filter(position.coords.longitude);
+    const newLatLng = new google.maps.LatLng(newLat, newLng);
+
+    if (!stableLocation) {
+        stableLocation = newLatLng;
+        lastRecordedLocation = newLatLng;
+        return;
+    }
+
+    const distance = google.maps.geometry.spherical.computeDistanceBetween(stableLocation, newLatLng);
+
+    if (distance > 5) { // 5m以上移動した場合に記録
+        stableLocation = newLatLng;
+        totalWalkedDistance += distance;
+        lastRecordedLocation = newLatLng;
+        path.push(newLatLng);
+        currentLocationMarker.setPosition(newLatLng);
+
+        if (currentLocationMarker) {
+            currentLocationMarker.setPosition(newLatLng);
+        }
+
+        console.log(`累積距離: ${totalWalkedDistance.toFixed(2)} m`);
+        document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
+    }
+
+    // 一定時間ごとに安定した現在地を更新
+    if (Date.now() - lastUpdateTime > UPDATE_INTERVAL) {
+        stableLocation = newLatLng;
+        lastUpdateTime = Date.now();
+        // 過去のデータをクリアして次の測定に備える
+        averageFilterLat.values = [];
+        averageFilterLng.values = [];
     }
 }
 
