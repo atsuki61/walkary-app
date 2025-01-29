@@ -241,7 +241,7 @@ function updatePosition(position) {
 
     const distance = google.maps.geometry.spherical.computeDistanceBetween(stableLocation, newLatLng);
 
-    if (distance > 5) { // 5m以上移動した場合に記録
+    if (distance > 10) { // nm以上移動した場合に記録
         stableLocation = newLatLng;
         totalWalkedDistance += distance;
         lastRecordedLocation = newLatLng;
