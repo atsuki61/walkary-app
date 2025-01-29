@@ -201,11 +201,13 @@ function updatePosition(position) {
     const distance = google.maps.geometry.spherical.computeDistanceBetween(lastRecordedLocation, newLatLng);
 
     // 一定距離以上移動した場合のみ記録
-    if (distance/50 > 5) { // 5m以上移動した場合に追加
+    if (distance > 5) { // 5m以上移動した場合に追加
         totalWalkedDistance += distance;
         lastRecordedLocation = newLatLng;
         path.push(newLatLng);
         currentLocationMarker.setPosition(newLocation);
+
+        totalWalkedDistance/50;
 
         console.log(`累積距離: ${totalWalkedDistance.toFixed(2)} m`);
         document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
