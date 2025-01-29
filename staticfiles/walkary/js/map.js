@@ -156,26 +156,26 @@ function initPosition(position) {
     return totalWalkedDistance; // 計算結果を返す
 }*/
 
-function calculateWalkedDistance() {
+// function calculateWalkedDistance() {
 
-    for (let i = 0; i < path.getLength() - 1; i++) {
-        const start = path.getAt(i); // 現在のポイント
-        const end = path.getAt(i + 1); // 次のポイント
-        totalWalkedDistance += google.maps.geometry.spherical.computeDistanceBetween(start, end);
-    }
+//     for (let i = 0; i < path.getLength() - 1; i++) {
+//         const start = path.getAt(i); // 現在のポイント
+//         const end = path.getAt(i + 1); // 次のポイント
+//         totalWalkedDistance += google.maps.geometry.spherical.computeDistanceBetween(start, end);
+//     }
 
-    // 距離を画面に表示
-    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
-    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
+//     // 距離を画面に表示
+//     console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
+//     document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
 
-    return totalWalkedDistance;
-}
+//     return totalWalkedDistance;
+// }
 
 
 // n秒おきに歩いた距離を更新する関数を呼び出し
-setInterval(() => {
-    calculateWalkedDistance();
-}, 5000);
+// setInterval(() => {
+//     calculateWalkedDistance();
+// }, 5000);
 
 // updatePosition 関数に歩いた距離の更新を追加
 /*function updatePosition(position) {
