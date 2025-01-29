@@ -201,7 +201,7 @@ function updatePosition(position) {
     const distance = google.maps.geometry.spherical.computeDistanceBetween(lastRecordedLocation, newLatLng);
 
     // 一定距離以上移動した場合のみ記録
-    if (distance > 5) { // 5m以上移動した場合に追加
+    if (distance/50 > 5) { // 5m以上移動した場合に追加
         totalWalkedDistance += distance;
         lastRecordedLocation = newLatLng;
         path.push(newLatLng);
