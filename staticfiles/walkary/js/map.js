@@ -143,8 +143,6 @@ function updatePosition(position){
     currentLocationMarker.setPosition(currentLocation);
     path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
 
-    // 距離を再計算
-    calculateWalkedDistance();
 }
 
 function saveDistance() {
