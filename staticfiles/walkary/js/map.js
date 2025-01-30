@@ -117,6 +117,7 @@ function updatePosition(position){
         console.log("緯度: " + position.coords.latitude);
         console.log("経度: " + position.coords.longitude);
         console.log("精度: " + position.coords.accuracy + " meters");
+        document.getElementById('test').innerText = `精度: ${position.coords.accuracy.toFixed(2)} m`;
         return;
     }
 
