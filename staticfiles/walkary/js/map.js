@@ -95,21 +95,21 @@ function initPosition(position) {
     });
 }
 
-function calculateWalkedDistance() {
-    let newWalkedDistance = 0;
-    for (let i = 0; i < path.getLength() - 1; i++) {
-        const start = path.getAt(i);
-        const end = path.getAt(i + 1);
-        const distance = google.maps.geometry.spherical.computeDistanceBetween(start, end);
-        if (distance >= 3) {
-            newWalkedDistance += distance;
-        }
-    }
-    totalWalkedDistance += newWalkedDistance;
-    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
-    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
-    return totalWalkedDistance;
-}
+// function calculateWalkedDistance() {
+//     let newWalkedDistance = 0;
+//     for (let i = 0; i < path.getLength() - 1; i++) {
+//         const start = path.getAt(i);
+//         const end = path.getAt(i + 1);
+//         const distance = google.maps.geometry.spherical.computeDistanceBetween(start, end);
+//         if (distance >= 3) {
+//             newWalkedDistance += distance;
+//         }
+//     }
+//     totalWalkedDistance += newWalkedDistance;
+//     console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
+//     document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
+//     return totalWalkedDistance;
+// }
 
 function updatePosition(position){
     if(position.coords.accuracy > 20){
@@ -142,6 +142,20 @@ function updatePosition(position){
     currentLocation = newLocation;
     currentLocationMarker.setPosition(currentLocation);
     path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
+
+    let newWalkedDistance = 0;
+    for (let i = 0; i < path.getLength() - 1; i++) {
+        const start = path.getAt(i);
+        const end = path.getAt(i + 1);
+        const distance = google.maps.geometry.spherical.computeDistanceBetween(start, end);
+        if (distance >= 3) {
+            newWalkedDistance += distance;
+        }
+    }
+    totalWalkedDistance += newWalkedDistance;
+    console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
+    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
+    return totalWalkedDistance;
 
 }
 
