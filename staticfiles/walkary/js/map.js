@@ -159,7 +159,7 @@ function updatePosition(position){
 
 }
 
-function saveDistance() {
+function save_distance() {
     localStorage.setItem("walked_distance", JSON.stringify(totalWalkedDistance));
     alert("保存できたよ");
     window.dispatchEvent(new StorageEvent("storage", {
