@@ -4,6 +4,8 @@ let mapClickMode = null;
 let currentLocation;
 let totalWalkedDistance = 0;
 
+const LAT_THRESHOLD = 0.0000898; // 10m latitude threshold
+const LNG_THRESHOLD = 0.0001096; // 10m longitude threshold
 class MovingAverageFilter {
     constructor(size) {
         this.size = size;
@@ -111,13 +113,9 @@ function initPosition(position) {
 //     return totalWalkedDistance;
 // }
 
-function updatePosition(position){
-    if(position.coords.accuracy > 20){
+function updatePosition(position) {
+    if (position.coords.accuracy > 20) {
         console.warn('Accuracy too low:', position.coords.accuracy);
-        console.log("緯度: " + position.coords.latitude);
-        console.log("経度: " + position.coords.longitude);
-        console.log("精度: " + position.coords.accuracy + " meters");
-        document.getElementById('test').innerText = `精度: ${position.coords.accuracy.toFixed(2)} m`;
         return;
     }
 
@@ -126,19 +124,16 @@ function updatePosition(position){
         lng: position.coords.longitude
     };
 
-    // 最後の位置と新しい位置の距離を計算
     if (currentLocation) {
-        let lastPoint = new google.maps.LatLng(currentLocation.lat, currentLocation.lng);
-        let newPoint = new google.maps.LatLng(newLocation.lat, newLocation.lng);
-        let movedDistance = google.maps.geometry.spherical.computeDistanceBetween(lastPoint, newPoint);
-
-        if (movedDistance < 3) {
-            console.log('移動距離が小さすぎるため無視:', movedDistance);
-            return; // 3m未満の移動は無視
+        let latDiff = Math.abs(newLocation.lat - currentLocation.lat);
+        let lngDiff = Math.abs(newLocation.lng - currentLocation.lng);
+        
+        if (latDiff < LAT_THRESHOLD && lngDiff < LNG_THRESHOLD) {
+            console.log('移動が小さすぎるため無視:', latDiff, lngDiff);
+            return;
         }
     }
 
-    // 位置情報を更新
     currentLocation = newLocation;
     currentLocationMarker.setPosition(currentLocation);
     path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
