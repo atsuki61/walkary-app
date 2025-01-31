@@ -43,7 +43,7 @@
             const today = new Date().toISOString().split('T')[0];
 
             if (walkedDistance) {
-                document.getElementById('walked-distance').innerText = `${JSON.parse(walkedDistance)} m`;
+                document.getElementById('walked-distance').innerText = `${JSON.parse(walkedDistance).toFixed(0)} m`;
                 // 保存されたデータを取得
                 const walkedData = JSON.parse(localStorage.getItem('walked_data')) || [];
                 // 既存データに今日の日付がなければ追加
