@@ -148,7 +148,6 @@ function updatePosition(position) {
         }
     }
     totalWalkedDistance += newWalkedDistance;
-    totalWalkedDistance -= position.coords.accuracy;
     console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
     document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
     return totalWalkedDistance;
