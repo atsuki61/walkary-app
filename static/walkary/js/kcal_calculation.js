@@ -19,8 +19,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const walkingKcal = calculateWalkingKcal(walkedDistance);
         const runningKcal = calculateRunningKcal(walkedDistance);
 
-        walking_kcalElement.innerText = `${walkingKcal.toFixed(2)} kcal`;
-        running_kcalElement.innerText = `${runningKcal.toFixed(2)} kcal`;
+        walking_kcalElement.innerHTML = `
+            <img src="/static/walkary/icons/walk.png" alt="歩行アイコン">
+            <span class="action-label">歩行</span>
+            <span class="kcal-value">${walkingKcal.toFixed(2)} kcal</span>
+        `;
+        
+        running_kcalElement.innerHTML = `
+            <img src="/static/walkary/icons/run.png" alt="ランニングアイコン">
+            <span class="action-label">ランニング</span>
+            <span class="kcal-value">${runningKcal.toFixed(2)} kcal</span>
+        `;
+
+        // 画像サイズを直接設定
+        walking_kcalElement.querySelector('img').style.width = '24px';
+        walking_kcalElement.querySelector('img').style.height = '24px';
+        running_kcalElement.querySelector('img').style.width = '24px';
+        running_kcalElement.querySelector('img').style.height = '24px';
     };
 
     updateKcalDisplay();
