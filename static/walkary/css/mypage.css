@@ -1,9 +1,14 @@
 main {
     padding: 20px;
+    padding-bottom: 100px;
+    overflow-y: auto;
+    min-height: calc(100vh - 90px);
 }
 
 .container {
     position: relative;
+    overflow-y: auto;
+    height: 100%;
 }
 
 #info {

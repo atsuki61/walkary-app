@@ -4,6 +4,8 @@ header {
     background: #3e9bc3;
     color: white;
     border-bottom: 1px solid #ddd;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 header h1 {
@@ -12,11 +14,14 @@ header h1 {
 }
 
 main {
-    padding: 30px 20px;
+    padding: 20px 10px;
     display: flex;
     justify-content: center;
     width: 100%;
     box-sizing: border-box;
+    overflow-x: hidden;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Responsive adjustments */
@@ -55,9 +60,9 @@ input {
     background-color: #e8eff5;
     width: 100%;
     margin: 0;
+    box-sizing: border-box;
     position: relative;
-    left: 0;
-    right: 0;
+    z-index: 0;
 }
 
 @media (min-width: 768px) {
@@ -145,13 +150,57 @@ input {
 }
 
 @media (max-width: 600px) {
-    #controls {
-        margin: 10px 0;   /* autoから0に変更 */
-        width: calc(100% - 32px); /* パディング考慮 */
+    html, body {
+        overflow: auto;
+        height: auto;
+        min-height: 100vh;
     }
 
-    #controls .button-group {
-        grid-template-columns: 1fr;
+    .container {
+        overflow: visible;
+        height: auto;
+        padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));  /* ナビゲーション + ホームバー分の余白 */
+    }
+
+    main {
+        order: 1;
+        padding: 10px;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .map-section {
+        order: 2;
+        height: auto;
+        position: relative;
+        margin: 10px 0;
+    }
+
+    #map {
+        height: 50vh;  /* 画面の半分の高さに固定 */
+        margin-bottom: 0;
+        position: relative;
+    }
+
+    #controls {
+        position: relative;
+        z-index: 2;
+        margin: 10px 0;
+        height: auto;
+        overflow: visible;
+    }
+
+
+    button[onclick="save_distance()"] {
+        width: calc(100% - 20px);
+        max-width: 300px;
+        margin: 20px auto;
+        display: block;
+        position: relative;
+        transform: none;
+        left: auto;
+        bottom: auto;
+        margin-bottom: calc(60px + env(safe-area-inset-bottom, 0px) + 20px);  /* ナビゲーション + ホームバー + 余白 */
     }
 }
 

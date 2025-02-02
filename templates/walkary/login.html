@@ -1,63 +1,61 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'walkary/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'walkary/css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'walkary/css/common.css' %}">
+    <title>Walkary - ログイン</title>
+  </head>
   <body>
-    {% if form.errors  %}
-    <p>ユーザーID, パスワードが一致しません．</p>
+    <header>
+      <h1>Walkary</h1>
+    </header>
+
+    {% if form.errors %}
+      <p class="error-message">ユーザーID, パスワードが一致しません．</p>
     {% endif %}
-    <form method="POST" action="{% url 'walkary:login' %}">
+    <form class="auth-form" method="POST" action="{% url 'walkary:login' %}">
       {% csrf_token %}
-      <label>ユーザーID</label>
-      {{ form.username }}
-      {{ form.username.errors }}
-      <label>パスワード</label>
-      {{ form.password }}
-      {{ form.password.errors }}
-      <button type = "submit">ログイン</button>
+      <!-- ユーザーIDフィールド -->
+      <div class="form-group">
+        <label class="form-label">ユーザーID</label>
+        {{ form.username }}
+        {{ form.username.errors }}
+      </div>
+
+      <!-- パスワードフィールド（パスワードトグルを追加） -->
+      <div class="form-group" style="position: relative;">
+        <label class="form-label">パスワード</label>
+        {{ form.password }}
+        <span class="password-toggle">👁️</span>
+        {{ form.password.errors }}
+      </div>
+
+      <button class="login-btn" type="submit">ログイン</button>
+
+      <div class="form-switch">
+        アカウントをお持ちでない方は<a href="{% url 'walkary:create_account' %}">新規登録</a>
+      </div>
     </form>
+    <script>
+      // パスワード表示切り替え機能
+      document.addEventListener('DOMContentLoaded', function() {
+        const toggleButtons = document.querySelectorAll('.password-toggle');
+        
+        toggleButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const passwordField = this.previousElementSibling;
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            
+            // アイコンの見た目を更新
+            this.textContent = type === 'password' ? '👁️' : '👁️';
+          });
+        });
+      });
+    </script>
   </body>
 </html>
-
-{% comment %} <!DOCTYPE html>
-<html lang="ja">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'walkary/css/Login-Design.css' %}">
-</head>
-<body>
-    <div id="form-ui">
-        <form method="POST" action="{% url 'walkary:login' %}" id="form">
-          {% csrf_token %}
-            <div id="form-body">
-                <div id="welcome-lines">
-                    <div id="welcome-line-1">Walkary</div>
-                    <div id="welcome-line-2">お帰りなさい!</div>
-                </div>
-                <div id="input-area">
-                    <div class="form-inp">
-                        {{ user_form.username }}
-                        <span class="error">{{ user_form.username.errors }}</span>
-                    </div>
-                    <div class="form-inp">
-                        {{ user_form.password }}
-                        <span class="error">{{ user_form.password.errors }}</span>
-                    </div>
-                </div>
-                <div id="submit-button-cvr">
-                    <button id="submit-button" type="submit">ログイン</button>
-                </div>
-                <div id="forgot-pass">
-                    <a href="#">パスワードを忘れましたか？</a>
-                </div>
-                <div class="bars">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar walkary-bar">Walkary</div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
-            </div>
-        </form>
-    </div>
-</body>
-</html> {% endcomment %}
