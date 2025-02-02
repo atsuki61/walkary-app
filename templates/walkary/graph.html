@@ -3,15 +3,15 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>walkary</title>
     <link rel="stylesheet" href="{% static 'walkary/css/common.css' %}">
-    <link rel="stylesheet" href="{% static 'walkary/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'walkary/css/graph.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body class="no-scroll">
     <div class="container">
-        <div class="chart-container" style="width: 80%; height: 500px; margin: auto;">
+        <div class="chart-container" style="width: 90%; height: 500px; margin: 20px auto; background: #ffffff; border-radius: 20px; padding: 20px; box-shadow: 0 8px 24px rgba(149, 157, 165, 0.15);">
             <canvas id="stepsChart"></canvas>
         </div>
         <nav>
@@ -53,35 +53,169 @@
                 const date = new Date(item.date);
                 const month = String(date.getMonth() + 1).padStart(2, '0');
                 const day = String(date.getDate()).padStart(2, '0');
-                return `${month}-${day}`;
+                return `${month}/${day}`;
             });
 
             const steps = recentData.map(item => item.steps);
 
             // グラフを描画
             const ctx = document.getElementById('stepsChart').getContext('2d');
+            
+            // グラデーションの作成
+            const gradientFill = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientFill.addColorStop(0, 'rgba(26, 115, 232, 0.1)');
+            gradientFill.addColorStop(1, 'rgba(26, 115, 232, 0.0)');
+
+            const gradientLine = ctx.createLinearGradient(0, 0, 400, 0);
+            gradientLine.addColorStop(0, '#1a73e8');
+            gradientLine.addColorStop(1, '#6c5ce7');
+
             new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: '歩いた距離 (m)',
+                        label: '歩いた距離',
                         data: steps,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 2,
-                        fill: false
+                        borderColor: gradientLine,
+                        backgroundColor: gradientFill,
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: '#1a73e8',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 8,
+                        pointHoverBackgroundColor: '#ffffff',
+                        pointHoverBorderColor: '#6c5ce7',
+                        pointHoverBorderWidth: 3,
+                        pointShadowOffsetX: 1,
+                        pointShadowOffsetY: 1,
+                        pointShadowBlur: 5,
+                        pointShadowColor: 'rgba(0, 0, 0, 0.1)'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 20,
+                            right: 20,
+                            bottom: 20,
+                            left: 20
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                font: {
+                                    family: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                                    size: 14,
+                                    weight: '600'
+                                },
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                color: '#2c3e50'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                            titleColor: '#2c3e50',
+                            bodyColor: '#2c3e50',
+                            titleFont: {
+                                family: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                                size: 14,
+                                weight: '600'
+                            },
+                            bodyFont: {
+                                family: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                                size: 14
+                            },
+                            padding: 12,
+                            borderColor: 'rgba(26, 115, 232, 0.1)',
+                            borderWidth: 1,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.parsed.y.toLocaleString()} m`;
+                                }
+                            },
+                            cornerRadius: 8,
+                            caretSize: 6,
+                            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                        }
+                    },
                     scales: {
                         y: {
                             beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false,
+                                lineWidth: 1
+                            },
+                            border: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    family: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                                    size: 12,
+                                    weight: '500'
+                                },
+                                padding: 10,
+                                color: '#2c3e50',
+                                callback: function(value) {
+                                    return value.toLocaleString() + ' m';
+                                }
+                            },
                             title: {
                                 display: true,
-                                text: '歩いた距離 (m)'
+                                text: '歩いた距離',
+                                font: {
+                                    family: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                                    size: 14,
+                                    weight: '600'
+                                },
+                                padding: {top: 10, bottom: 10},
+                                color: '#2c3e50'
                             }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            border: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    family: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                                    size: 12,
+                                    weight: '500'
+                                },
+                                padding: 10,
+                                color: '#2c3e50'
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuart'
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.4,
+                            borderWidth: 3,
+                            borderJoinStyle: 'round',
+                            capBezierPoints: true
                         }
                     }
                 }

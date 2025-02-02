@@ -3,7 +3,7 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>walkary</title>
     <link rel="stylesheet" href="{% static 'walkary/css/common.css' %}">
     <link rel="stylesheet" href="{% static 'walkary/css/map.css' %}" />
@@ -38,10 +38,10 @@
             {% comment %} <button onclick="savePolyline()">ポリライン保存</button>
             <button onclick="loadPolyline()">読み込み</button> {% endcomment %}
         </main>
-        <div id="map"></div>
-        <div id="test"></div>
-            <br>
+        <div class="map-section">
+            <div id="map"></div>
             <button onclick="save_distance()">距離を保存</button>
+        </div>
         <nav>
             <ul>
                 <li><a href="{% url 'walkary:home' %}" ><img src="{% static 'walkary/icons/home.png' %}"alt="ホームアイコン"><br><small>ホーム</small></a></li>
