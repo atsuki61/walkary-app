@@ -48,10 +48,10 @@
         togglePassword.addEventListener('click', function() {
           if (passwordField.type === 'password') {
             passwordField.type = 'text';
-            togglePassword.src = "{% static 'walkary/icons/visibility_off.png' %}";
+            togglePassword.src = "{% static 'walkary/icons/visibility.png' %}";
           } else {
             passwordField.type = 'password';
-            togglePassword.src = "{% static 'walkary/icons/visibility.png' %}";
+            togglePassword.src = "{% static 'walkary/icons/visibility_off.png' %}";
           }
         });
       });
