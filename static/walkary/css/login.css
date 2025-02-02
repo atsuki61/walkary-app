@@ -156,19 +156,26 @@ header h1 {
   transform: translateY(0);
 }
 
-/* パスワード表示トグル */
+/* パスワード表示トグルのスタイル */
 .password-toggle {
   position: absolute;
   right: 1rem;
   top: 2.3rem;
+  width: 24px;  /* アイコンサイズ */
+  height: 24px;
+  background-size: cover;
   cursor: pointer;
-  opacity: 0.6;
   transition: var(--transition-smooth);
 }
 
-.password-toggle:hover {
-  opacity: 1;
+.password-toggle.show {
+  background-image: url("visibility.png"); /* パスワード表示アイコン */
 }
+
+.password-toggle.hide {
+  background-image: url("visibility_off.png"); /* パスワード非表示アイコン */
+}
+
 
 /* レスポンシブ対応 */
 @media (max-width: 480px) {

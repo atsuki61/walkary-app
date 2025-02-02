@@ -30,7 +30,7 @@
       <div class="form-group" style="position: relative;">
         <label class="form-label">パスワード</label>
         {{ form.password }}
-        <span class="password-toggle"><img src="{% static 'walkary/icons/visibility.png' %}" alt="目玉アイコン"></span>
+        <img src="{% static 'walkary/images/visibility.png' %}" class="password-toggle" id="togglePassword">
         {{ form.password.errors }}
       </div>
 
@@ -41,19 +41,18 @@
       </div>
     </form>
     <script>
-      // パスワード表示切り替え機能
       document.addEventListener('DOMContentLoaded', function() {
-        const toggleButtons = document.querySelectorAll('.password-toggle');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = togglePassword.previousElementSibling;
         
-        toggleButtons.forEach(button => {
-          button.addEventListener('click', function() {
-            const passwordField = this.previousElementSibling;
-            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordField.setAttribute('type', type);
-            
-            // アイコンの見た目を更新
-            this.textContent = type === 'password' ? '<img src="{% static 'walkary/icons/visibility_off.png' %}" alt="目玉アイコン">' : '<img src="{% static 'walkary/icons/visibility.png' %}" alt="目玉閉じアイコン">';
-          });
+        togglePassword.addEventListener('click', function() {
+          if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            togglePassword.src = "{% static 'walkary/images/visibility_off.png' %}";
+          } else {
+            passwordField.type = 'password';
+            togglePassword.src = "{% static 'walkary/images/visibility.png' %}";
+          }
         });
       });
     </script>
