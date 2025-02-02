@@ -20,13 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const runningKcal = calculateRunningKcal(walkedDistance);
 
         walking_kcalElement.innerHTML = `
-            <img src="walkary/icons/walk.png" alt="歩行アイコン">
+            <img src="/staticfiles/walkary/icons/walk.png" alt="歩行アイコン">
             <span class="action-label">歩行</span>
             <span class="kcal-value">${walkingKcal.toFixed(2)} kcal</span>
         `;
         
         running_kcalElement.innerHTML = `
-            <img src="walkary/icons/run.png" alt="ランニングアイコン">
+            <img src="/staticfiles/walkary/icons/run.png" alt="ランニングアイコン">
             <span class="action-label">ランニング</span>
             <span class="kcal-value">${runningKcal.toFixed(2)} kcal</span>
         `;
