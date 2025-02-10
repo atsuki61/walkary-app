@@ -45,3 +45,4 @@ python manage.py migrate
 ・Manual Deploy ボタンのDeploy last commitでデプロイ。
 
 ・Render が自動生成した URL にアクセスしてデプロイできてるか確認。
+
