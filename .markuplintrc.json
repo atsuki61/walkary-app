@@ -1,0 +1,17 @@
+{
+  "extends": ["markuplint:recommended"],
+  "overrides": [
+    {
+      "files": ["templates/**/*.html"],
+      "rules": {
+        "required-h1": false,
+        "permitted-contents": false,
+        "no-orphaned-end-tag": false,
+        "heading-levels": false,
+        "label-has-control": false,
+        "required-element": false
+      }
+    }
+  ]
+}
+
