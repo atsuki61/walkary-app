@@ -27,7 +27,7 @@ env.read_env(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-69jhr!u**ohu%!wm-bhri#75+xsn0zo(o*(36=a09kh^z2j_g%'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'testproject.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', 'postgresql://django_user:AZehW7IdFtmeiikIcUbHabolAgN7nuuK@dpg-cu32d2qj1k6c73a0vt60-a/django_render_db_dl1q')
+        default=os.getenv('DATABASE_URL')
     )
 }
 
