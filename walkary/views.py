@@ -57,16 +57,18 @@ class Create_Account(View):
 #ログイン
 class Account_login(View):
     def post(self, request, *arg, **kwargs):
-        form = LoginForm(data=request.POST)
+        # AuthenticationForm を適切に利用し、認証と例外処理を一元化
+        form = LoginForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            user = User.objects.get(username=username)
+            user = form.get_user()
             login(request, user)
             return redirect('walkary:home')
+        # バリデーションエラー時は同じフォームを返してメッセージを表示
         return render(request, 'walkary/login.html', {'form': form})
 
     def get(self, request, *args, **kwargs):
-        form = LoginForm(request.POST)
+        # GET では空フォームを表示
+        form = LoginForm()
         return render(request, 'walkary/login.html', {'form': form})
 
 

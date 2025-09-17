@@ -14,5 +14,4 @@ urlpatterns = [
     path("home/", views.homePage, name="home"),
     path("graph/", views.graphPage, name="graph"),
     path('mypage/', views.myPage, name='mypage'),
-    path('logout/', LogoutView.as_view(template_name="walkary/index.html"), name="logout"),
 ]
