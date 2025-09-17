@@ -32,7 +32,11 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'django-render-vucj.onrender.com',  # Render.com本番環境
+    '127.0.0.1',                        # ローカル開発環境
+    'localhost',                        # ローカル開発環境
+]
 
 
 # Application definition
