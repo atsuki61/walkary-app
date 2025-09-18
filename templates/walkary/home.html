@@ -12,9 +12,10 @@
     <link rel="stylesheet" href="{% static 'walkary/css/home.css' %}" />
     <link rel="stylesheet" href="{% static 'walkary/css/common.css' %}" />
 
-    <script src="{% static 'walkary/js/map.js' %}"></script>
-    <script src="{% static 'walkary/js/update_remaining.js' %}"></script>
-    <script src="{% static 'walkary/js/kcal_calculation.js' %}"></script>
+    <script src="{% static 'walkary/js/map.js' %}" defer></script>
+    <script src="{% static 'walkary/js/update_remaining.js' %}" defer></script>
+    <script src="{% static 'walkary/js/kcal_calculation.js' %}" defer></script>
+    <script src="{% static 'walkary/js/home.js' %}" defer></script>
   </head>
   <body>
     <header>
@@ -78,7 +79,7 @@
             />
           </button>
         </div>
-        <button id="create-route-btn">ルートを作成する</button>
+        <button id="create-route-btn" data-map-url="{% url 'walkary:map' %}">ルートを作成する</button>
       </main>
       <nav>
         <ul>
@@ -117,137 +118,6 @@
         </ul>
       </nav>
     </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const walkedDistance = localStorage.getItem("walked_distance");
-        const today = new Date().toISOString().split("T")[0];
-        const targetGoal = parseInt(
-          document.getElementById("target-goal").textContent
-        );
-        const progressCircle = document.querySelector(".progress");
-        const circumference = 2 * Math.PI * 48.5; // r=48.5
-
-        function updateProgress(walked) {
-          // 進捗率を100%で制限
-          const progress = Math.min((walked / targetGoal) * 100, 100);
-          const offset = circumference - (progress / 100) * circumference;
-          progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
-          progressCircle.style.strokeDashoffset = offset;
-
-          // プログレスバーとその背景は常に表示
-          const progressBackground = document.querySelector(
-            ".progress-background"
-          );
-          progressCircle.style.display = "block";
-          progressBackground.style.display = "block";
-
-          // remainingの更新（0未満にならないように）
-          const remaining = Math.max(0, targetGoal - walked);
-          document.getElementById("remaining").innerText = `${remaining} m`;
-
-          // 目標達成時の処理
-          const circle = document.querySelector(".circle");
-          if (walked >= targetGoal) {
-            if (!circle.classList.contains("goal-achieved")) {
-              circle.classList.add("goal-achieved");
-              // 目標達成時のメッセージを表示
-              showAchievementMessage();
-            }
-          } else {
-            circle.classList.remove("goal-achieved");
-          }
-        }
-
-        function showAchievementMessage() {
-          // 目標達成時のメッセージ表示
-          const message = document.createElement("div");
-          message.className = "achievement-message";
-          message.innerHTML = `
-                    <div class="achievement-popup">
-                        <h3>🎉 目標達成！</h3>
-                        <p>今日の目標距離を達成しました！<br>素晴らしい成果です！</p>
-                    </div>
-                `;
-          document.body.appendChild(message);
-
-          // 3秒後にメッセージを消す
-          setTimeout(() => {
-            message.remove();
-          }, 3000);
-        }
-
-        if (walkedDistance) {
-          const walked = JSON.parse(walkedDistance).toFixed(0);
-          document.getElementById("walked-distance").innerText = `${walked} m`;
-          updateProgress(walked);
-          // 保存されたデータを取得
-          const walkedData =
-            JSON.parse(localStorage.getItem("walked_data")) || [];
-          // 既存データに今日の日付がなければ追加
-          const existingDataIndex = walkedData.findIndex(
-            (data) => data.date === today
-          );
-          if (existingDataIndex === -1) {
-            walkedData.push({ date: today, steps: walked });
-          } else {
-            walkedData[existingDataIndex].steps = walked;
-          }
-          // 更新して保存
-          localStorage.setItem("walked_data", JSON.stringify(walkedData));
-        } else {
-          document.getElementById("walked-distance").innerText = "0 m";
-          updateProgress(0);
-        }
-
-        // ルート作成ボタンのイベントリスナー
-        document
-          .getElementById("create-route-btn")
-          .addEventListener("click", () => {
-            window.location.href = "{% url 'walkary:map' %}";
-          });
-      });
-    </script>
-    <style>
-      .achievement-message {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1000;
-        animation: fadeInOut 3s ease-in-out;
-      }
-
-      .achievement-popup {
-        background: white;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        text-align: center;
-      }
-
-      .achievement-popup h3 {
-        color: #4caf50;
-        margin: 0 0 10px 0;
-      }
-
-      @keyframes fadeInOut {
-        0% {
-          opacity: 0;
-          transform: translate(-50%, -40%);
-        }
-        10% {
-          opacity: 1;
-          transform: translate(-50%, -50%);
-        }
-        90% {
-          opacity: 1;
-          transform: translate(-50%, -50%);
-        }
-        100% {
-          opacity: 0;
-          transform: translate(-50%, -40%);
-        }
-      }
-    </style>
+    
   </body>
 </html>
