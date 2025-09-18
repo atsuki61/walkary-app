@@ -33,7 +33,20 @@ class UserProfileForm(forms.ModelForm):
         self.fields['name'].widget.attrs.update({
             'placeholder': 'ユーザー名'
         })
+        # 性別フィールドの未選択表示を日本語に変更
+        gender_choices = list(self.fields['gender'].choices)
+        if gender_choices and gender_choices[0][0] == '':
+            gender_choices[0] = ('', '選択してください')
+            self.fields['gender'].choices = gender_choices
 
     class Meta:
         model = UserProfile
         fields = ['name', 'age', 'height', 'weight', 'gender', 'goal']
+        labels = {
+            'name': '名前',
+            'age': '年齢',
+            'height': '身長',
+            'weight': '体重',
+            'gender': '性別',
+            'goal': '目標',
+        }
