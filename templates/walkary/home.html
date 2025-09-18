@@ -1,125 +1,84 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    {% load static %}
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
-    />
-    <title>Walkary</title>
-    <!-- <link rel="stylesheet" href="{% static 'walkary/css/index.css' %}">-->
-    <link rel="stylesheet" href="{% static 'walkary/css/home.css' %}" />
-    <link rel="stylesheet" href="{% static 'walkary/css/common.css' %}" />
+{% extends 'walkary/base.html' %}
+{% load static %}
 
-    <script src="{% static 'walkary/js/storage.js' %}" defer></script>
-    <script src="{% static 'walkary/js/map.js' %}" defer></script>
-    <script src="{% static 'walkary/js/update_remaining.js' %}" defer></script>
-    <script src="{% static 'walkary/js/kcal_calculation.js' %}" defer></script>
-    <script src="{% static 'walkary/js/home.js' %}" defer></script>
-  </head>
-  <body>
-    <header>
-      <h1>Walkary</h1>
-    </header>
+{% block title %}Walkary{% endblock %}
 
-    <div class="container">
-      <main>
-        <div class="circle">
-          <svg
-            class="progress-circle"
-            width="300"
-            height="300"
-            viewBox="-2 -2 104 104"
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'walkary/css/home.css' %}" />
+{% endblock %}
+
+{% block nav_home_class %}active{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>Walkary</h1>
+  </header>
+  <main>
+    <div class="circle">
+      <svg
+        class="progress-circle"
+        width="300"
+        height="300"
+        viewBox="-2 -2 104 104"
+      >
+        <defs>
+          <linearGradient
+            id="progress-gradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="0%"
           >
-            <defs>
-              <linearGradient
-                id="progress-gradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
-                <stop offset="0%" stop-color="#2196F3" />
-                <stop offset="100%" stop-color="#00BCD4" />
-              </linearGradient>
-              <linearGradient
-                id="achievement-gradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
-                <stop offset="0%" stop-color="#4CAF50" />
-                <stop offset="100%" stop-color="#8BC34A" />
-              </linearGradient>
-            </defs>
-            <circle
-              class="progress-background"
-              cx="50"
-              cy="50"
-              r="48.5"
-            ></circle>
-            <circle class="progress" cx="50" cy="50" r="48.5"></circle>
-          </svg>
-          <p>あと <span id="remaining"></span></p>
-          <p><span id="walked-distance"></span></p>
-          <p>/ <span id="target-goal">{{ goal }}</span>m</p>
-        </div>
-        <div class="info-buttons">
-          <button class="info-button" id="walk-kcal">
-            <img
-              src="{% static 'walkary/icons/walk.png' %}"
-              alt="歩行アイコン"
-            />
-          </button>
-          <button class="info-button" id="run-kcal">
-            <img
-              src="{% static 'walkary/icons/run.png' %}"
-              alt="ランニングアイコン"
-            />
-          </button>
-        </div>
-        <button id="create-route-btn" data-map-url="{% url 'walkary:map' %}">
-          ルートを作成する
-        </button>
-      </main>
-      <nav>
-        <ul>
-          <li>
-            <a href="{% url 'walkary:home' %}" class="active"
-              ><img
-                src="{% static 'walkary/icons/home.png' %}"
-                alt="ホームアイコン"
-              /><br /><small>ホーム</small></a
-            >
-          </li>
-          <li>
-            <a href="{% url 'walkary:map' %}"
-              ><img
-                src="{% static 'walkary/icons/map.png' %}"
-                alt="マップアイコン"
-              /><br /><small>マップ</small></a
-            >
-          </li>
-          <li>
-            <a href="{% url 'walkary:graph' %}"
-              ><img
-                src="{% static 'walkary/icons/graph.png' %}"
-                alt="グラフアイコン"
-              /><br /><small>グラフ</small></a
-            >
-          </li>
-          <li>
-            <a href="{% url 'walkary:mypage' %}"
-              ><img
-                src="{% static 'walkary/icons/mypage.png' %}"
-                alt="マイページアイコン"
-              /><br /><small>マイページ</small></a
-            >
-          </li>
-        </ul>
-      </nav>
+            <stop offset="0%" stop-color="#2196F3" />
+            <stop offset="100%" stop-color="#00BCD4" />
+          </linearGradient>
+          <linearGradient
+            id="achievement-gradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="0%"
+          >
+            <stop offset="0%" stop-color="#4CAF50" />
+            <stop offset="100%" stop-color="#8BC34A" />
+          </linearGradient>
+        </defs>
+        <circle
+          class="progress-background"
+          cx="50"
+          cy="50"
+          r="48.5"
+        ></circle>
+        <circle class="progress" cx="50" cy="50" r="48.5"></circle>
+      </svg>
+      <p>あと <span id="remaining"></span></p>
+      <p><span id="walked-distance"></span></p>
+      <p>/ <span id="target-goal">{{ goal }}</span>m</p>
     </div>
-  </body>
-</html>
+    <div class="info-buttons">
+      <button class="info-button" id="walk-kcal">
+        <img
+          src="{% static 'walkary/icons/walk.png' %}"
+          alt="歩行アイコン"
+        />
+      </button>
+      <button class="info-button" id="run-kcal">
+        <img
+          src="{% static 'walkary/icons/run.png' %}"
+          alt="ランニングアイコン"
+        />
+      </button>
+    </div>
+    <button id="create-route-btn" data-map-url="{% url 'walkary:map' %}">
+      ルートを作成する
+    </button>
+  </main>
+{% endblock %}
+
+{% block extra_scripts %}
+  <script src="{% static 'walkary/js/storage.js' %}" defer></script>
+  <script src="{% static 'walkary/js/map.js' %}" defer></script>
+  <script src="{% static 'walkary/js/update_remaining.js' %}" defer></script>
+  <script src="{% static 'walkary/js/kcal_calculation.js' %}" defer></script>
+  <script src="{% static 'walkary/js/home.js' %}" defer></script>
+{% endblock %}

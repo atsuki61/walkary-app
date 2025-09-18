@@ -1,90 +1,54 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    {% load static %}
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
-    />
-    <title>walkary</title>
-    <link rel="stylesheet" href="{% static 'walkary/css/common.css' %}" />
-    <link rel="stylesheet" href="{% static 'walkary/css/graph.css' %}" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
-  <body class="no-scroll">
-    <div class="container">
-      <div
-        class="chart-container"
-        style="
-          width: 90%;
-          height: 500px;
-          margin: 20px auto;
-          background: #ffffff;
-          border-radius: 20px;
-          padding: 20px;
-          box-shadow: 0 8px 24px rgba(149, 157, 165, 0.15);
-        "
-      >
-        <canvas
-          id="stepsChart"
-          role="img"
-          aria-label="直近7日間の歩行距離の折れ線グラフ（単位: メートル）"
-          aria-describedby="stepsTableCaption"
-        ></canvas>
-      </div>
-      <div class="chart-table-wrapper">
-        <table id="stepsTable" class="sr-only">
-          <caption id="stepsTableCaption">
-            直近7日間の歩行距離データ（スクリーンリーダー向け）
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">日付</th>
-              <th scope="col">距離 (m)</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <nav>
-        <ul>
-          <li>
-            <a href="{% url 'walkary:home' %}"
-              ><img
-                src="{% static 'walkary/icons/home.png' %}"
-                alt="ホームアイコン"
-              /><br /><small>ホーム</small></a
-            >
-          </li>
-          <li>
-            <a href="{% url 'walkary:map' %}"
-              ><img
-                src="{% static 'walkary/icons/map.png' %}"
-                alt="マップアイコン"
-              /><br /><small>マップ</small></a
-            >
-          </li>
-          <li>
-            <a href="{% url 'walkary:graph' %}" class="active"
-              ><img
-                src="{% static 'walkary/icons/graph.png' %}"
-                alt="グラフアイコン"
-              /><br /><small>グラフ</small></a
-            >
-          </li>
-          <li>
-            <a href="{% url 'walkary:mypage' %}"
-              ><img
-                src="{% static 'walkary/icons/mypage.png' %}"
-                alt="マイページアイコン"
-              /><br /><small>マイページ</small></a
-            >
-          </li>
-        </ul>
-      </nav>
-    </div>
-    <script>
+{% extends 'walkary/base.html' %}
+{% load static %}
+
+{% block title %}walkary{% endblock %}
+{% block body_class %}no-scroll{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'walkary/css/graph.css' %}" />
+{% endblock %}
+
+{% block nav_graph_class %}active{% endblock %}
+
+{% block content %}
+  <div
+    class="chart-container"
+    style="
+      width: 90%;
+      height: 500px;
+      margin: 20px auto;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(149, 157, 165, 0.15);
+    "
+  >
+    <canvas
+      id="stepsChart"
+      role="img"
+      aria-label="直近7日間の歩行距離の折れ線グラフ（単位: メートル）"
+      aria-describedby="stepsTableCaption"
+    ></canvas>
+  </div>
+  <div class="chart-table-wrapper">
+    <table id="stepsTable" class="sr-only">
+      <caption id="stepsTableCaption">
+        直近7日間の歩行距離データ（スクリーンリーダー向け）
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">日付</th>
+          <th scope="col">距離 (m)</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+{% endblock %}
+
+{% block extra_scripts %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
       document.addEventListener("DOMContentLoaded", function () {
         const walkedData =
           JSON.parse(localStorage.getItem("walked_data")) || [];
@@ -316,6 +280,5 @@
           });
         }
       });
-    </script>
-  </body>
-</html>
+  </script>
+{% endblock %}
