@@ -1,5 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const walkedDistance = localStorage.getItem("walked_distance");
+  // SafeStorage がない環境でも動けるようフォールバック
+  const StorageAPI = typeof SafeStorage !== 'undefined' ? SafeStorage : {
+    readJSON: (k, fb) => {
+      try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch { return fb; }
+    },
+    getItem: (k) => {
+      try { return localStorage.getItem(k); } catch { return null; }
+    },
+    writeJSON: (k, v) => {
+      try { localStorage.setItem(k, JSON.stringify(v)); } catch {}
+    }
+  };
+
+  const walkedDistance = StorageAPI.getItem("walked_distance");
   const today = new Date().toISOString().split("T")[0];
   const targetGoal = parseInt(
     document.getElementById("target-goal").textContent
@@ -58,14 +71,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (walkedEl) walkedEl.innerText = `${walked} m`;
     updateProgress(walked);
 
-    const walkedData = JSON.parse(localStorage.getItem("walked_data")) || [];
+    const walkedData = StorageAPI.readJSON("walked_data", []) || [];
     const existingDataIndex = walkedData.findIndex((data) => data.date === today);
     if (existingDataIndex === -1) {
-      walkedData.push({ date: today, steps: walked });
+      walkedData.push({ date: today, steps: walked, distance_m: walked });
     } else {
       walkedData[existingDataIndex].steps = walked;
+      walkedData[existingDataIndex].distance_m = walked;
     }
-    localStorage.setItem("walked_data", JSON.stringify(walkedData));
+    StorageAPI.writeJSON("walked_data", walkedData);
   } else {
     const walkedEl = document.getElementById("walked-distance");
     if (walkedEl) walkedEl.innerText = "0 m";
