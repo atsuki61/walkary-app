@@ -12,7 +12,19 @@
 <body class="no-scroll">
     <div class="container">
         <div class="chart-container" style="width: 90%; height: 500px; margin: 20px auto; background: #ffffff; border-radius: 20px; padding: 20px; box-shadow: 0 8px 24px rgba(149, 157, 165, 0.15);">
-            <canvas id="stepsChart"></canvas>
+            <canvas id="stepsChart" role="img" aria-label="直近7日間の歩行距離の折れ線グラフ（単位: メートル）" aria-describedby="stepsTableCaption"></canvas>
+        </div>
+        <div class="chart-table-wrapper">
+            <table id="stepsTable" class="sr-only">
+                <caption id="stepsTableCaption">直近7日間の歩行距離データ（スクリーンリーダー向け）</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">日付</th>
+                        <th scope="col">距離 (m)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
         <nav>
             <ul>
@@ -220,6 +232,22 @@
                     }
                 }
             });
+
+            // 代替表（スクリーンリーダー向け）を生成
+            const tbody = document.querySelector('#stepsTable tbody');
+            if (tbody) {
+                tbody.innerHTML = '';
+                recentData.forEach(item => {
+                    const tr = document.createElement('tr');
+                    const tdDate = document.createElement('td');
+                    const tdSteps = document.createElement('td');
+                    tdDate.textContent = item.date;
+                    tdSteps.textContent = (item.steps ?? 0).toLocaleString();
+                    tr.appendChild(tdDate);
+                    tr.appendChild(tdSteps);
+                    tbody.appendChild(tr);
+                });
+            }
         });
     </script>
 </body>
