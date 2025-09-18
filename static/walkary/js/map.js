@@ -22,7 +22,16 @@ class MovingAverageFilter {
     }
 }
 
+// 画面状況の安全確認ヘルパ
+function isMapPage() {
+    return typeof document !== 'undefined' && document.getElementById('map');
+}
+
 function initMap() {
+    // Google Maps が未ロード、または #map 要素がないページでは初期化しない
+    if (!isMapPage() || typeof google === 'undefined' || !google.maps) {
+        return;
+    }
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 35.7447721, lng: 139.8003518 },
         zoom: 14
@@ -45,7 +54,9 @@ function initMap() {
 
     google.maps.event.addListener(directionsRenderer, 'directions_changed', () => {
         const result = directionsRenderer.getDirections();
-        displayRouteDistance(result);
+        if (result) {
+            displayRouteDistance(result);
+        }
     });
 
     google.maps.event.addListener(map, 'click', (event) => {
@@ -119,7 +130,10 @@ function updatePosition(position) {
         console.log("緯度: " + position.coords.latitude);
         console.log("経度: " + position.coords.longitude);
         console.log("精度: " + position.coords.accuracy + " meters");
-        document.getElementById('test').innerText = `精度: ${position.coords.accuracy.toFixed(2)} m`;
+        const accEl = document.getElementById('test');
+        if (accEl) {
+            accEl.innerText = `精度: ${position.coords.accuracy.toFixed(2)} m`;
+        }
         return;
     }
 
@@ -144,11 +158,16 @@ function updatePosition(position) {
 
     // 位置情報を更新
     currentLocation = newLocation;
-    currentLocationMarker.setPosition(currentLocation);
+    if (currentLocationMarker) {
+        currentLocationMarker.setPosition(currentLocation);
+    }
     path.push(new google.maps.LatLng(currentLocation.lat, currentLocation.lng));
 
     console.log(`歩いた距離: ${totalWalkedDistance.toFixed(2)} m`);
-    document.getElementById('walked-distance').innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
+    const walkedEl = document.getElementById('walked-distance');
+    if (walkedEl) {
+        walkedEl.innerText = `歩いた距離: ${totalWalkedDistance.toFixed(2)} m`;
+    }
 }
 
 function save_distance() {
@@ -326,8 +345,14 @@ function displayRouteDistance(result) {
     const hours = Math.floor(totalDuration / 3600);  // 秒を時間に変換
     const minutes = Math.floor((totalDuration % 3600) / 60);  // 残りの秒数を分に変換
 
-    document.getElementById('route-distance').innerText = `ルートの距離: ${totalDistance.toFixed(2)} km`;
-    document.getElementById('route-duration').innerText = `所要時間: ${hours} 時間 ${minutes} 分`;
+    const distEl = document.getElementById('route-distance');
+    const durEl = document.getElementById('route-duration');
+    if (distEl) {
+        distEl.innerText = `ルートの距離: ${totalDistance.toFixed(2)} km`;
+    }
+    if (durEl) {
+        durEl.innerText = `所要時間: ${hours} 時間 ${minutes} 分`;
+    }
 }
 
 // スタート地点かゴール地点のどちらかが入力されているかチェック
@@ -362,14 +387,30 @@ function updateWaypointAndDistanceState() {
     }
 }
 
-// ページ読み込み時に初期状態を確認
-document.addEventListener("DOMContentLoaded", updateWaypointAndDistanceState);
+// ページ読み込み時に初期状態を確認（対象要素があるページのみ）
+document.addEventListener("DOMContentLoaded", () => {
+    const startEl = document.getElementById('start');
+    const endEl = document.getElementById('end');
+    const waypointEl = document.getElementById('waypoint');
+    const distanceEl = document.getElementById('distance');
+    if (startEl || endEl || waypointEl || distanceEl) {
+        updateWaypointAndDistanceState();
+    }
+});
 
 // 入力フィールドの変更時にチェックを実行
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById('start').addEventListener('input', updateWaypointAndDistanceState);
-    document.getElementById('end').addEventListener('input', updateWaypointAndDistanceState);
-    document.getElementById('waypoint').addEventListener('input', updateWaypointAndDistanceState);
+    const startEl = document.getElementById('start');
+    const endEl = document.getElementById('end');
+    const waypointEl = document.getElementById('waypoint');
+    if (startEl) startEl.addEventListener('input', updateWaypointAndDistanceState);
+    if (endEl) endEl.addEventListener('input', updateWaypointAndDistanceState);
+    if (waypointEl) waypointEl.addEventListener('input', updateWaypointAndDistanceState);
 });
 
-window.onload = initMap;
+// Google Maps が利用可能かつ #map があるページのみ初期化
+window.addEventListener('load', () => {
+    if (isMapPage() && typeof google !== 'undefined' && google.maps) {
+        initMap();
+    }
+});
