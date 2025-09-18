@@ -443,6 +443,48 @@ form input::placeholder, form textarea::placeholder {
     stop-color: #4CAF50;
 }
 
+/* home.htmlインラインだった達成メッセージのスタイル */
+.achievement-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    animation: fadeInOut 3s ease-in-out;
+}
+
+.achievement-popup {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.achievement-popup h3 {
+    color: #4caf50;
+    margin: 0 0 10px 0;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+    10% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    90% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+}
+
 .achievement-gradient stop:last-child {
     stop-color: #8BC34A;
 }
