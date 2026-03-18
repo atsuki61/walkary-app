@@ -1,47 +1,33 @@
 :root {
-  /* WCAG 2.1準拠カラーパレット（common.cssに合わせて修正） */
-  --primary-blue: #1976D2;
-  --accent-cyan: #00838F;
-  --soft-cyan: #E1F5FE;
+  --primary-blue: #1976d2;
+  --accent-cyan: #00838f;
+  --soft-cyan: #e1f5fe;
   --shadow-blue: rgba(25, 118, 210, 0.1);
-  
-  /* グラデーション修正 */
-  --primary-gradient: linear-gradient(135deg, var(--primary-blue) 0%, #00ACC1 100%);
+  --primary-gradient: linear-gradient(135deg, #1976d2 0%, #00acc1 100%);
   --glass-gradient: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
-  --hover-gradient: linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.9));
-  
-  /* テキストカラー */
-  --text-primary: #1a237e;
-  --text-secondary: #37474f;
-  
-  /* 背景とボーダー */
+  --text-primary: #1565c0;
+  --text-secondary: #455a64;
   --surface-glass: rgba(255, 255, 255, 0.98);
   --border-ethereal: 1px solid rgba(203, 213, 225, 0.3);
-  
-  /* シャドウとエフェクト */
   --shadow-magical: 0 12px 24px -6px var(--shadow-blue);
-  --glow-primary: 0 0 20px rgba(33, 150, 243, 0.15);
-  --glow-hover: 0 0 30px rgba(14, 165, 233, 0.2);
-  --glow-active: 0 0 10px rgba(14, 165, 233, 0.1);
-  
-  /* アニメーション */
-  --pulse-animation: pulse 2s infinite;
-  --wave-animation: wave 6s infinite linear;
-  
-  /* トランジション */
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   background: repeating-linear-gradient(15deg, rgba(99, 102, 241, 0.03) 0px 50px, rgba(168, 85, 247, 0.03) 50px 100px);
   min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
   width: 100%;
 }
 

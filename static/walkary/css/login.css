@@ -1,61 +1,8 @@
-/* リセット */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* login.css - index.css + common.css と組み合わせて使用 */
 
-:root {
-  --primary-blue: #0d47a1;
-  --accent-cyan: #006064;
-  --soft-cyan: #e1f5fe;
-  --shadow-blue: rgba(13, 71, 161, 0.1);
-  --primary-gradient: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-cyan) 100%);
-  --glass-gradient: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
-  --text-primary: #1a237e;
-  --text-secondary: #37474f;
-  --surface-glass: rgba(255, 255, 255, 0.98);
-  --border-ethereal: 1px solid rgba(203, 213, 225, 0.3);
-  --shadow-magical: 0 12px 24px -6px var(--shadow-blue);
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 背景・基本設定 */
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: repeating-linear-gradient(15deg, 
-    rgba(99, 102, 241, 0.03) 0px 50px,
-    rgba(168, 85, 247, 0.03) 50px 100px
-  );
-  padding: 0;
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-}
-
-/* ヘッダー部分のスタイル調整 */
+/* ヘッダー下マージン追加 */
 header {
-  background: var(--surface-glass);
-  backdrop-filter: blur(20px);
-  padding: 1rem 2rem;
-  box-shadow: var(--shadow-magical);
-  display: flex;
-  justify-content: center;  /* 中央寄せに変更 */
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  margin-bottom: 2rem;  /* 下部にマージンを追加 */
-}
-
-header h1 {
-  color: var(--text-primary);
-  font-size: 2rem;
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin-bottom: 2rem;
 }
 
 /* フォームコンテナ */
@@ -149,7 +96,7 @@ header h1 {
 
 .login-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(13, 71, 161, 0.2);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
 }
 
 .login-btn:active {
@@ -167,15 +114,6 @@ header h1 {
   cursor: pointer;
   transition: var(--transition-smooth);
 }
-
-.password-toggle.show {
-  background-image: url("visibility.png"); /* パスワード表示アイコン */
-}
-
-.password-toggle.hide {
-  background-image: url("visibility_off.png"); /* パスワード非表示アイコン */
-}
-
 
 /* レスポンシブ対応 */
 @media (max-width: 480px) {

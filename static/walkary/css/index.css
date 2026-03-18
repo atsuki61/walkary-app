@@ -1,35 +1,29 @@
 :root {
-  /* カラーパレット（common.cssに合わせて修正） */
-  --primary-blue: #1976D2;
-  --accent-cyan: #00838F;
-  --soft-cyan: #E1F5FE;
+  --primary-blue: #1976d2;
+  --accent-cyan: #00838f;
+  --soft-cyan: #e1f5fe;
   --shadow-blue: rgba(25, 118, 210, 0.1);
-  --text-primary: #1565C0;
-  --text-secondary: #455A64;
+  --text-primary: #1565c0;
+  --text-secondary: #455a64;
   --surface-glass: rgba(255, 255, 255, 0.98);
   --border-ethereal: 1px solid rgba(203, 213, 225, 0.3);
-  
-  /* グラデーション修正 */
-  --primary-gradient: linear-gradient(135deg, var(--primary-blue) 0%, #00ACC1 100%);
+  --primary-gradient: linear-gradient(135deg, #1976d2 0%, #00acc1 100%);
   --glass-gradient: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
-  
-  /* シャドウ */
   --shadow-magical: 0 12px 24px -6px var(--shadow-blue);
   --shadow-hover: 0 16px 30px -6px var(--shadow-blue);
-  
-  /* トランジション */
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* リセットとベース設定 */
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
   background: repeating-linear-gradient(15deg, rgba(99, 102, 241, 0.03) 0px 50px, rgba(168, 85, 247, 0.03) 50px 100px);
   min-height: 100vh;
   display: flex;
@@ -43,7 +37,7 @@ header {
   padding: 1rem 2rem;
   box-shadow: var(--shadow-magical);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: sticky;
   top: 0;
@@ -116,39 +110,33 @@ main {
   flex-wrap: wrap;
 }
 
-/* ボタン */
+/* ボタン (.button はリンク用、button要素は共有) */
 .button {
   display: inline-block;
   padding: 0.875rem 1.5rem;
-  background-image: 
-    radial-gradient(circle at top, rgba(255,255,255,0.2) 0%, transparent 30%),
+  background-image:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.2) 0%, transparent 30%),
     var(--primary-gradient);
-  background-size: 
-    200% 300%,
-    200% 200%;
-  background-position: 
-    0% 0%,
-    100% 50%;
+  background-size: 200% 300%, 200% 200%;
+  background-position: 0% 0%, 100% 50%;
   color: white;
   text-decoration: none;
   border-radius: 16px;
   font-weight: 700;
   border: none;
   cursor: pointer;
-  transition: 
+  transition:
     var(--transition-smooth),
     background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   text-align: center;
   min-width: 140px;
-  box-shadow: 
+  box-shadow:
     0 8px 24px -4px var(--shadow-blue),
     inset 0 4px 8px rgba(255, 255, 255, 0.25),
     inset 0 -4px 8px rgba(0, 0, 0, 0.1),
     0 0 0 2px var(--primary-blue);
   position: relative;
   overflow: hidden;
-  transform-style: preserve-3d;
-  perspective: 1000px;
   letter-spacing: 0.5px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
@@ -160,24 +148,15 @@ main {
   left: -100%;
   width: 200%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.3) 50%,
-    rgba(255,255,255,0) 100%
-  );
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
   transition: left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 1;
 }
 
 .button:hover {
-  transform: 
-    translateY(-3px)
-    translateZ(10px);
-  background-position: 
-    100% 50%,
-    0% 50%;
-  box-shadow: 
+  transform: translateY(-3px);
+  background-position: 100% 50%, 0% 50%;
+  box-shadow:
     0 12px 32px -2px rgba(25, 118, 210, 0.4),
     inset 0 4px 12px rgba(255, 255, 255, 0.3),
     inset 0 -4px 8px rgba(0, 0, 0, 0.1),
@@ -189,16 +168,7 @@ main {
 }
 
 .button:active {
-  transform: 
-    translateY(1px)
-    scale(0.98);
-  background-image: 
-    radial-gradient(circle at top, rgba(0,0,0,0.1) 0%, transparent 30%),
-    linear-gradient(135deg, #1565c0 0%, #00838f 100%);
-  box-shadow: 
-    inset 0 4px 12px rgba(0, 0, 0, 0.2),
-    inset 0 -2px 4px rgba(255, 255, 255, 0.2),
-    0 0 0 2px var(--primary-blue);
+  transform: translateY(1px) scale(0.98);
   transition: all 0.1s ease-out;
 }
 
@@ -314,7 +284,6 @@ main {
   }
 }
 
-/* タッチデバイス用の調整 */
 @media (hover: none) and (pointer: coarse) {
   .card:hover {
     transform: none;

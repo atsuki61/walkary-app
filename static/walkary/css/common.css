@@ -1,9 +1,19 @@
+/* グローバルリセット */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
-  /* WCAG 2.1準拠カラーパレット */
+  /* カラーパレット */
   --primary-blue: #1976d2;
   --accent-cyan: #00838f;
   --soft-cyan: #e1f5fe;
   --shadow-blue: rgba(25, 118, 210, 0.1);
+  --shadow-color: rgba(25, 118, 210, 0.08);
 
   /* グラデーション */
   --primary-gradient: linear-gradient(135deg, #1976d2 0%, #00acc1 100%);
@@ -16,15 +26,14 @@
   /* テキストカラー */
   --text-primary: #1565c0;
   --text-secondary: #455a64;
-  /* 既存スタイルで参照されている基本色（未定義の補完） */
-  --text-color: #1f2937; /* bodyの基本文字色 */
+  --text-color: #1f2937;
 
   /* 背景とボーダー */
   --surface-glass: rgba(255, 255, 255, 0.98);
   --border-ethereal: 1px solid rgba(203, 213, 225, 0.3);
   --secondary-color: #f5f7fa;
-  --border-color: #e5e7eb; /* navのボーダー色 */
-  --primary-color: #1976d2; /* navリンク通常時の文字色 */
+  --border-color: #e5e7eb;
+  --primary-color: #1976d2;
 
   /* シャドウとエフェクト */
   --shadow-magical: 0 12px 24px -6px rgba(25, 118, 210, 0.15);
@@ -40,10 +49,8 @@ html {
 }
 
 body {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--secondary-color);
-  margin: 0;
-  padding: 0;
   color: var(--text-color);
   width: 100%;
   min-height: 100vh;
@@ -232,6 +239,79 @@ nav ul li a:hover {
   outline: 3px solid rgba(25, 118, 210, 0.5);
   outline-offset: 2px;
   border-radius: 8px;
+}
+
+/* 共通ヘッダー */
+header {
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px);
+  padding: 0.5rem 2rem;
+  box-shadow: var(--shadow-magical);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+header h1 {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 共通フォームスタイル */
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: var(--transition-smooth);
+  background-color: #fff;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+}
+
+input::placeholder {
+  color: #a0aec0;
+}
+
+:disabled {
+  background-color: #bebebe;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+:disabled::placeholder {
+  color: #fff;
+}
+
+/* スクリーンリーダー専用 */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 /* Reduced Motion 対応 */

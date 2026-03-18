@@ -1,17 +1,4 @@
-header {
-    text-align: center;
-    padding: 20px;
-    background: #3e9bc3;
-    color: white;
-    border-bottom: 1px solid #ddd;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 20px;
-}
+/* map.css - ヘッダーは common.css の共通スタイルを使用 */
 
 main {
     padding: 20px 10px;
@@ -41,19 +28,7 @@ main {
     }
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #3e9bc3;
-}
-
-input {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #77b0d0;
-    border-radius: 5px;
-}
+/* label と input は common.css の共通スタイルを使用 */
 
 #map {
     height: 70vh;
@@ -87,7 +62,7 @@ input {
     border-radius: 12px;
     max-width: 500px;
     width: 100%;
-    box-shadow: 0 2px 8px var(--shadow-color);
+    box-shadow: 0 2px 8px var(--shadow-blue);
 }
 
 #controls label {
@@ -204,12 +179,4 @@ input {
     }
 }
 
-:disabled {
-    background-color: #bebebe;
-    color:  #6c757d;
-    cursor: not-allowed;
-}
-
-:disabled::placeholder {
-    color: #fff;
-}
+/* :disabled は common.css の共通スタイルを使用 */

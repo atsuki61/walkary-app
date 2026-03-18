@@ -1,15 +1,4 @@
-header {
-  text-align: center;
-  padding: 20px;
-  background: #3e9bc3;
-  color: white;
-  border-bottom: 1px solid #ddd;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 20px;
-}
+/* グラフ画面固有のスタイル (common.css を base.html 経由で読み込み済み) */
 
 main {
   padding: 30px 20px;
@@ -19,58 +8,7 @@ main {
 .steps {
   font-size: 28px;
   font-weight: bold;
-  color: #1260f0;
-}
-
-/* Responsive adjustments */
-@media (min-width: 768px) {
-  .container {
-    max-width: 500px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    max-width: 600px;
-  }
-
-  header h1 {
-    font-size: 24px;
-  }
-}
-
-/* Form styles */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-form div {
-  display: flex;
-  flex-direction: column;
-}
-
-form input,
-form textarea {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-/* グラフページのスタイルを追加 */
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #14cfe7;
-}
-
-input {
-  width: calc(100% - 22px);
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #14cfe7;
-  border-radius: 5px;
+  color: var(--primary-blue);
 }
 
 .chart-container {
@@ -89,15 +27,14 @@ canvas {
   height: 100%;
 }
 
-/* スクリーンリーダーのみ向けに視覚的に非表示 */
-.sr-only {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
+@media (min-width: 768px) {
+  .container {
+    max-width: 500px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 600px;
+  }
 }
